@@ -1,12 +1,13 @@
 {
   "name": "react-calculator",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/main.bundle.js",
   "repository": "git@gitlab.com:seon-u/react-calculator.git",
   "author": "seon <seonu0823@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start" : ""
+    "prestart": "webpack --config ./webpack.dev.js",
+    "start": "electron ."
   },
   "dependencies": {
     "prop-types": "^15.6.2",
@@ -19,10 +20,18 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@types/electron": "^1.6.10",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
+    "electron": "^4.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
