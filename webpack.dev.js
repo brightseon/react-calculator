@@ -1,13 +1,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+console.log(path.join(__dirname, './dist'));
+
 const mainConfig = {
     mode : 'development',
     entry : './src/main/index.ts',
     target : 'electron-main',
     output : {
         filename : 'main.bundle.js',
-        path : path.resolve(__dirname, '/dist')
+        path : path.join(__dirname, '/dist')
     },
     node : {
         __dirname : false,
@@ -35,7 +37,7 @@ const rendererConfig = {
     target : 'electron-renderer',
     output : {
         filename : 'renderer.bundle.js',
-        path : path.resolve(__dirname, 'dist')
+        path : path.join(__dirname, '/dist')
     },
     node : {
         __dirname : false,

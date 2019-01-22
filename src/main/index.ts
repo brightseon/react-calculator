@@ -4,12 +4,14 @@ import path from 'path';
 
 let mainWindow : BrowserWindow;
 
-const createWindow = () => {
+const createWindow  = () : void => {
     mainWindow = new BrowserWindow({ height : 600, width : 800 });
 
     mainWindow.loadURL(format({
-        pathname : path.join(__dirname, './public/index.html')
+        pathname : path.join(__dirname, './index.html')
     }));
+
+    BrowserWindow.addDevToolsExtension('C:/Users/home/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0');
 
     mainWindow.webContents.openDevTools();
 
