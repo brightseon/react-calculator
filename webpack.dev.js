@@ -58,9 +58,22 @@ const rendererConfig = {
             {
                 test : /\.(scss|css)$/,
                 use : [
-                    'style-loader',
-                    'css-loader?sourceMap',
-                    'sass-loader?sourceMap'
+                    { 
+                        loader : 'style-loader' 
+                    },
+                    { 
+                        loader : 'css-loader',
+                        options : {
+                            sourceMap : true,
+                        }
+                    },
+                    { 
+                        loader : 'sass-loader',
+                        options : {
+                            sourceMap : true,
+                            data : `@import './src/renderer/_globalStyles';`
+                        }
+                    }
                 ]
             }
         ]

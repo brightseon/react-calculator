@@ -2,10 +2,21 @@ import { app, BrowserWindow } from 'electron';
 import { format } from 'url';
 import path from 'path';
 
+const isDev : boolean = true;
 let mainWindow : BrowserWindow;
 
 const createWindow  = () : void => {
-    mainWindow = new BrowserWindow({ height : 600, width : 800 });
+    let height : number = 0, width : number = 0;
+
+    if(isDev) {
+        height = 718;
+        width = 1059;
+    } else {
+        height = 718;
+        width = 500;
+    }
+
+    mainWindow = new BrowserWindow({ height, width });
 
     mainWindow.loadURL(format({
         pathname : path.join(__dirname, './index.html')
