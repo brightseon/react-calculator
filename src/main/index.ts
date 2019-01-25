@@ -2,7 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import { format } from 'url';
 import path from 'path';
 
-const isDev : boolean = true;
+const isDev : boolean = true,
+    EXTENSIONS_PATH : string = 'C:/Users/home/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0';
 let mainWindow : BrowserWindow;
 
 const createWindow  = () : void => {
@@ -16,13 +17,13 @@ const createWindow  = () : void => {
         width = 500;
     }
 
-    mainWindow = new BrowserWindow({ height, width });
+    mainWindow = new BrowserWindow({ height, width, autoHideMenuBar : true, minHeight : height, minWidth : width, frame : false, backgroundColor : '#F4F5F9' });
 
     mainWindow.loadURL(format({
         pathname : path.join(__dirname, './index.html')
     }));
 
-    BrowserWindow.addDevToolsExtension('C:/Users/home/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0');
+    BrowserWindow.addDevToolsExtension(EXTENSIONS_PATH);
 
     mainWindow.webContents.openDevTools();
 

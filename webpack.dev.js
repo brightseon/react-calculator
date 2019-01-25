@@ -57,6 +57,7 @@ const rendererConfig = {
             },
             {
                 test : /\.(scss|css)$/,
+                exclude : /node_modules/,
                 use : [
                     { 
                         loader : 'style-loader' 
@@ -65,16 +66,26 @@ const rendererConfig = {
                         loader : 'css-loader',
                         options : {
                             sourceMap : true,
+                            modules : true,
+                            localIdentName : '[local]__[hash:base64:5]',
+                            camelCase : 'dashes'
                         }
                     },
                     { 
                         loader : 'sass-loader',
                         options : {
                             sourceMap : true,
-                            data : `@import './src/renderer/_globalStyles';`
+                            data : `@import './src/renderer/globalStyles';`
                         }
                     }
                 ]
+            },
+            {
+                test : /\.(jpg|png|svg|ico|icns)$/,
+                loader : 'file-loader',
+                options : {
+                    name : '[path][name].[ext]'
+                }
             }
         ]
     },

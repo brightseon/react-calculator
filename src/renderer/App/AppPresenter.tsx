@@ -1,7 +1,12 @@
-import React from 'react';
-// import styles from './styles.scss';
-import './styles.scss';
+import React, { Fragment } from 'react';
+import styles from './styles.scss';
+import Header from '../Header';
 
-const AppPresenter : React.SFC = () => <div className="app">Hello Electron, Typescript, React</div>;
+const AppPresenter : React.SFC = () => (
+    <div>
+        <Header />
+        <span className={ styles.font }>Hello Electron, Typescript, React</span>
+    </div>
+);
 
 export default AppPresenter;

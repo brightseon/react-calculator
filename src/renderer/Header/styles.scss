@@ -1,0 +1,16 @@
+.header {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+    -webkit-app-region : drag;
+
+    .box {
+        display: flex;
+    }
+
+    .max-btn {
+        margin: 0 10px;
+    }
+}
