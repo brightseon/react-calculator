@@ -5,9 +5,11 @@ import maximize from '../../../images/maximize.svg';
 import minimization from '../../../images/minimization.svg';
 import close from '../../../images/close.svg';
 
-console.log(styles);
+interface IProps {
+    closeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
+}
 
-const HeaderPresenter = () => (
+const HeaderPresenter : React.SFC<IProps> = ({ closeWindow }) => (
     <div className={ styles.header }>
         <div>
             <img src={ menu } />
@@ -19,7 +21,7 @@ const HeaderPresenter = () => (
             <div className={ styles.maxBtn }>
                 <img src={ maximize } />
             </div>
-            <div>
+            <div className={ styles.closeBtn } onClick={ closeWindow }>
                 <img src={ close } />
             </div>
         </div>

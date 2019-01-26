@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import { format } from 'url';
 import path from 'path';
+import { ipcMain } from 'electron';
 
 const isDev : boolean = true,
     EXTENSIONS_PATH : string = 'C:/Users/home/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0';
@@ -31,6 +32,10 @@ const createWindow  = () : void => {
         mainWindow = null;
     });
 };
+
+ipcMain.on('close-window', () => {
+    app.emit('window-all-closed');
+});
 
 app.on('ready', createWindow);
 

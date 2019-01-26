@@ -10,7 +10,16 @@
         display: flex;
     }
 
+    .min-btn {
+        -webkit-app-region : no-drag;
+    }
+    
     .max-btn {
         margin: 0 10px;
+        -webkit-app-region : no-drag;
+    }
+
+    .close-btn {
+        -webkit-app-region : no-drag;
     }
 }
