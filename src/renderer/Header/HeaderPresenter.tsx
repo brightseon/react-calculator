@@ -7,18 +7,20 @@ import close from '../../../images/close.svg';
 
 interface IProps {
     closeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
+    maximizeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
+    minimizeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const HeaderPresenter : React.SFC<IProps> = ({ closeWindow }) => (
+const HeaderPresenter : React.SFC<IProps> = ({ closeWindow, maximizeWindow, minimizeWindow }) => (
     <div className={ styles.header }>
-        <div>
+        <div className={ styles.menuBtn }>
             <img src={ menu } />
         </div>
         <div className={ styles.box }>
-            <div>
+            <div className={ styles.minBtn } onClick={ minimizeWindow }>
                 <img src={ minimization } />
             </div>
-            <div className={ styles.maxBtn }>
+            <div className={ styles.maxBtn } onClick={ maximizeWindow }>
                 <img src={ maximize } />
             </div>
             <div className={ styles.closeBtn } onClick={ closeWindow }>

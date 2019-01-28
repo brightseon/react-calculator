@@ -31,10 +31,34 @@ const createWindow  = () : void => {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+
+    mainWindow.on('maximize', () => {
+        mainWindow.maximize();
+    });
+
+    mainWindow.on('minimize', () => {
+        mainWindow.minimize();
+    });
+
+    mainWindow.on('unmaximize', () => {
+        mainWindow.unmaximize();
+    });
 };
 
-ipcMain.on('close-window', () => {
+ipcMain.on('window-close', () => {
     app.emit('window-all-closed');
+});
+
+ipcMain.on('window-maximize', () => {
+    if(mainWindow.isMaximized()) {
+        mainWindow.emit('unmaximize');
+    } else {
+        mainWindow.emit('maximize');
+    }
+});
+
+ipcMain.on('window-minimize', () => {
+    mainWindow.emit('minimize');
 });
 
 app.on('ready', createWindow);

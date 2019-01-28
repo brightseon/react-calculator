@@ -6,6 +6,10 @@
     padding: 15px 10px;
     -webkit-app-region : drag;
 
+    .menu-btn {
+        -webkit-app-region : no-drag;
+    }
+
     .box {
         display: flex;
     }
