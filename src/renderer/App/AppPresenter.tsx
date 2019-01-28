@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import styles from './styles.scss';
 import Header from '../Header';
+import Home from '../Home';
 
 const AppPresenter : React.SFC = () => (
     <div>
         <Header />
-        <span className={ styles.font }>Hello Electron, Typescript, React</span>
+        <Home />
     </div>
 );
 

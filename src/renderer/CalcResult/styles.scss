@@ -1,0 +1,38 @@
+.cacl-result-box {
+    height: 141px;
+    margin: 22px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+
+    .cacl-result-input {
+        width: 100%;
+        all : unset;
+        text-align: right;
+        color: transparent;
+        text-shadow: 0 0 0 #454552;
+        padding: 37px 25px;
+        height: 100%;
+        box-sizing: border-box;
+        font-size: 48px;
+    }
+
+    .btn-box {
+        width: 128px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        margin-left: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .common-btn {
+        all: unset;
+        color: $navyColor;
+        font-size: 14px;
+    }
+}
