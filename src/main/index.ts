@@ -11,10 +11,10 @@ const createWindow  = () : void => {
     let height : number = 0, width : number = 0;
 
     if(isDev) {
-        height = 718;
+        height = 730;
         width = 1059;
     } else {
-        height = 718;
+        height = 730;
         width = 500;
     }
 

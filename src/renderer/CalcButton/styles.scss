@@ -1,0 +1,30 @@
+.calc-button-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    
+    .clear-btn,
+    .operator-btn,
+    .number-btn,
+    .equal-btn {
+        height: 100px;
+        font-size: 48px;
+        text-align: center;
+    }
+    
+    .clear-btn {
+        color: $redColor;
+    }
+    
+    .operator-btn {
+        color: $blueColor;
+    }
+    
+    .number-btn {
+        color: $blackColor;
+    }
+    
+    .equal-btn {
+        color: $whiteColor;
+        background-color: $blueColor;
+    }
+}
