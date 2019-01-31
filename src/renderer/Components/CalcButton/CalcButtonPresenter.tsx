@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.scss';
 import Button from '../Button';
-import { buttonLabels } from '../common/buttonLabels';
+import { buttonLabels } from '../../utils/buttonLabels';
 
 const CalcButtonPresenter = () => (
     <div className={ styles.calcButtonBox }>

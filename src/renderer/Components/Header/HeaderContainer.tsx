@@ -4,15 +4,15 @@ import { ipcRenderer } from 'electron';
 
 class HeaderContainer extends Component {
 
-    closeWindow : React.MouseEventHandler<HTMLDivElement> = () : void => {
+    closeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-close');
     };
 
-    maximizeWindow : React.MouseEventHandler<HTMLDivElement> = () : void => {
+    maximizeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-maximize');
     };
 
-    minimizeWindow : React.MouseEventHandler<HTMLDivElement> = () : void => {
+    minimizeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-minimize');
     }
 

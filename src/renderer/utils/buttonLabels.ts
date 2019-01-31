@@ -8,7 +8,6 @@ const OPERATOR_BTN = 'operatorBtn';
 const NUMBER_BTN = 'numberBtn';
 const EQUAL_BTN = 'equalBtn';
 
-
 // className, text, 
 export const buttonLabels : Array<labelInfo> = [
     { className : CLEAR_BTN, text : 'C' },
