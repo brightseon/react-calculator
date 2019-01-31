@@ -8,17 +8,10 @@ const isDev : boolean = true,
 let mainWindow : BrowserWindow;
 
 const createWindow  = () : void => {
-    let height : number = 0, width : number = 0;
+    let height : number = 718, width : number = isDev ? 1059 : 500;
 
-    if(isDev) {
-        height = 730;
-        width = 1059;
-    } else {
-        height = 730;
-        width = 500;
-    }
-
-    mainWindow = new BrowserWindow({ height, width, autoHideMenuBar : true, minHeight : height, minWidth : width, frame : false, backgroundColor : '#F4F5F9' });
+    // mainWindow = new BrowserWindow({ height, width, autoHideMenuBar : true, minHeight : height, minWidth : width, frame : false, backgroundColor : '#F4F5F9' });
+    mainWindow = new BrowserWindow({ autoHideMenuBar : true, minHeight : height, minWidth : width, frame : false, backgroundColor : '#F4F5F9' });
 
     mainWindow.loadURL(format({
         pathname : path.join(__dirname, './index.html')

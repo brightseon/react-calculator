@@ -4,7 +4,7 @@ import Header from '../Header';
 import Home from '../Home';
 
 const AppPresenter : React.SFC = () => (
-    <div>
+    <div className={ styles.appBox }>
         <Header />
         <Home />
     </div>
