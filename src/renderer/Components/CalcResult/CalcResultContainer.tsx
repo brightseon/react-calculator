@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 
-const CalcResultContainer = () => <ResultPresenter />;
+interface IProps {
+    currentExpression : string;
+};
+
+const CalcResultContainer : SFC<IProps> = ({ currentExpression }) => {
+    console.log(currentExpression);
+    return <ResultPresenter />;
+}
+
 
 export default CalcResultContainer;
