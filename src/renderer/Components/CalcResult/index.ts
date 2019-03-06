@@ -2,12 +2,16 @@ import CalcResult from './CalcResultContainer';
 import { connect } from 'react-redux';
 import { CalcState } from '../../store/modules/calc/types';
 
-interface MapStateToProps {
+interface State {
+    calc : CalcState;
+};
+
+interface IMapStateToProps {
     currentExpression : string;
 };
 
-const mapStateToProps = (state : CalcState) => ({
-    currentExpression : state.currentExpression
+const mapStateToProps = (state : State) : IMapStateToProps => ({
+    currentExpression : state.calc.currentExpression
 });
 
-export default connect<MapStateToProps>(mapStateToProps)(CalcResult);
+export default connect<IMapStateToProps>(mapStateToProps)(CalcResult);

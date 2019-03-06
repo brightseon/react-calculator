@@ -9,7 +9,7 @@ interface IMapDispatchToProps {
     clickButton : (button : number | string) => void;
 };
 
-const mapDispatchToProps = (dispatch : Dispatch) => ({
+const mapDispatchToProps = (dispatch : Dispatch) : IMapDispatchToProps => ({
     clickButton : (button : number | string) => dispatch(clickButton(button))
 });
 

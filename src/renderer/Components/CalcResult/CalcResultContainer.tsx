@@ -5,10 +5,7 @@ interface IProps {
     currentExpression : string;
 };
 
-const CalcResultContainer : SFC<IProps> = ({ currentExpression }) => {
-    console.log(currentExpression);
-    return <ResultPresenter />;
-}
+const CalcResultContainer : SFC<IProps> = ({ currentExpression }) => <ResultPresenter currentExpression={ currentExpression } />;
 
 
 export default CalcResultContainer;

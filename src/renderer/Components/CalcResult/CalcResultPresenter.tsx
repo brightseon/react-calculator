@@ -6,18 +6,16 @@ interface IProps {
     currentExpression : string;
 };
 
-const CalcResultPresenter : SFC = () => {
-    return (
-        <div className={ styles.calcResultBox }>
-            <div className={ styles.calcInputBox }>
-                <input className={ styles.calcResultInput } type="text" name="calcResult" />
-            </div>
-            <div className={ styles.btnBox }>
-                <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />
-                <Button className={ styles.commonBtn } text={ 'COPY' } onClick={ null } />
-            </div>
+const CalcResultPresenter : SFC<IProps> = ({ currentExpression }) => (
+    <div className={ styles.calcResultBox }>
+        <div className={ styles.calcInputBox }>
+            <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression } readOnly />
         </div>
-    );
-}
+        <div className={ styles.btnBox }>
+            <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />
+            <Button className={ styles.commonBtn } text={ 'COPY' } onClick={ null } />
+        </div>
+    </div>
+);
 
 export default CalcResultPresenter;
