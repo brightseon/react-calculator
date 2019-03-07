@@ -2,7 +2,7 @@ import CalcResult from './CalcResultContainer';
 import { connect } from 'react-redux';
 import { CalcState } from '../../store/modules/calc/types';
 
-interface State {
+interface IState {
     calc : CalcState;
 };
 
@@ -10,7 +10,7 @@ interface IMapStateToProps {
     currentExpression : string;
 };
 
-const mapStateToProps = (state : State) : IMapStateToProps => ({
+const mapStateToProps = (state : IState) : IMapStateToProps => ({
     currentExpression : state.calc.currentExpression
 });
 

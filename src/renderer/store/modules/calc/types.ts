@@ -1,15 +1,11 @@
-export const CLICK_BUTTON = 'CLICK_BUTTON';
+export const MAKE_EXPRESSION = 'MAKE_EXPRESSION';
 
 export interface CalcState {
     currentExpression : string;
     calcHistory : object[];
 };
 
-export interface ClickAction {
-    type : typeof CLICK_BUTTON,
+export interface MakeExpressionAction {
+    type : typeof MAKE_EXPRESSION,
     payload : string | number;
-};
-
-export interface ButtonType {
-    button : number | string;
 };

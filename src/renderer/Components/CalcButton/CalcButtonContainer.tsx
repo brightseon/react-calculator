@@ -1,11 +1,10 @@
 import React, { SFC } from 'react';
 import CalcButtonPresenter from './CalcButtonPresenter';
-import { ButtonType } from '../../store/modules/calc/types';
 
 interface IProps {
-    clickButton : (button : number | string) => void;
+    makeExpression : (button : number | string) => void;
 }
 
-const CalcButtonContainer : SFC<IProps> = ({ clickButton }) => <CalcButtonPresenter clickButton={ clickButton } />
+const CalcButtonContainer : SFC<IProps> = ({ makeExpression }) => <CalcButtonPresenter makeExpression={ makeExpression } />
 
 export default CalcButtonContainer;

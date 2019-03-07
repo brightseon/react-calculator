@@ -1,8 +1,8 @@
-import { CLICK_BUTTON, CalcState, ClickAction } from './types';
+import { MAKE_EXPRESSION, CalcState, MakeExpressionAction } from './types';
 
-export const clickButton = (button : number | string) : ClickAction => {
+export const makeExpression = (button : number | string) : MakeExpressionAction => {
     return {
-        type : CLICK_BUTTON,
+        type : MAKE_EXPRESSION,
         payload : button
     };
 };
@@ -12,16 +12,16 @@ const initialState : CalcState = {
     calcHistory : []
 };
 
-const reducer = (state : CalcState = initialState, action : ClickAction) : CalcState => {
+const reducer = (state : CalcState = initialState, action : MakeExpressionAction) : CalcState => {
     switch (action.type) {
-        case CLICK_BUTTON :
+        case MAKE_EXPRESSION :
             return setCurrentExpression(state, action);
         default :
             return initialState;
     }
 };
 
-const setCurrentExpression = (state : CalcState, action : ClickAction) : CalcState => {
+const setCurrentExpression = (state : CalcState, action : MakeExpressionAction) : CalcState => {
     return {
         ...state,
         currentExpression : state.currentExpression + action.payload
