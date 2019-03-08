@@ -7,5 +7,4 @@ interface IProps {
 
 const CalcResultContainer : SFC<IProps> = ({ currentExpression }) => <ResultPresenter currentExpression={ currentExpression } />;
 
-
 export default CalcResultContainer;
