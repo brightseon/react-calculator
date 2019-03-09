@@ -1,4 +1,5 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction } from './types';
+import calculateUtil from '../../../utils/calculate';
 
 export const makeExpression = (button : number | string) : MakeExpressionAction => {
     return {
@@ -24,7 +25,8 @@ export const calculate = () : CalculateAction => {
 const initialState : CalcState = {
     currentExpression : '',
     calcHistory : [],
-    calculationResult : 0
+    calculationResult : 0,
+    lastExpression : ''
 };
 
 const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction) : CalcState => {
@@ -33,7 +35,7 @@ const reducer = (state : CalcState = initialState, action : MakeExpressionAction
             return setCurrentExpression(state, action);
 
         case RESET_EXPRESSION : 
-            return resetCurrentExpression(state, action);
+            return resetCurrentExpression(state);
 
         case CALCULATE :
             return calculateExpression(state, action);
@@ -50,17 +52,19 @@ const setCurrentExpression = (state : CalcState, action : MakeExpressionAction) 
     };
 };
 
-const resetCurrentExpression = (state : CalcState, action : ResetExpressionAction) : CalcState => {
+const resetCurrentExpression = (state : CalcState) : CalcState => {
     return {
         ...state,
-        currentExpression : ''
+        currentExpression : '',
+        lastExpression : ''
     };
 };
 
 const calculateExpression = (state : CalcState, action : CalculateAction) : CalcState => {
     return {
         ...state,
-        currentExpression : ''
+        currentExpression : '',
+        lastExpression : state.currentExpression
     };
 };
 

@@ -5,7 +5,8 @@ export const CALCULATE = 'CALCULATE';
 export interface CalcState {
     currentExpression : string;
     calcHistory : object[];
-    calculationResult : number
+    calculationResult : number;
+    lastExpression : string;
 };
 
 export interface MakeExpressionAction {
@@ -23,4 +24,4 @@ export interface CalculateAction {
 
 interface ButtonType {
     button : number | string;
-}
+};

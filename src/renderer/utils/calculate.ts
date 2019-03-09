@@ -18,7 +18,12 @@ const division = (firstNum : number, lastNum : number) => {
 
 };
 
-const calculate = (operator : string, firstNum : number, lastNum : number) => {
+const calculate = (currentExpression : string) => {
+    // operator : string, firstNum : number, lastNum : number
+    const operator : string = '';
+    const firstNum : number = 0;
+    const lastNum : number = 0;
+
     switch(operator) {
         case '+' : 
             return sum(firstNum, lastNum);
