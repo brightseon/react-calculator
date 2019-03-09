@@ -20,26 +20,18 @@ const divisionExpression = (currentExpression : string) : Expression => {
 };
 
 const sum = (firstNum : number, lastNum : number) : number => {
-    console.log('calculate.ts sum start');
-
     return firstNum + lastNum;
 };
 
 const minus = (firstNum : number, lastNum : number) : number => {
-    console.log('calculate.ts minus start');
-
     return firstNum - lastNum;
 };
 
 const multiplication = (firstNum : number, lastNum : number) : number => {
-    console.log('calculate.ts multiplication start');
-
     return firstNum * lastNum;
 };
 
 const division = (firstNum : number, lastNum : number) : number => {
-    console.log('calculate.ts division start');
-
     return firstNum / lastNum;
 };
 
