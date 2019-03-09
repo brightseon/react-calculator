@@ -6,7 +6,7 @@ export interface LabelInfo {
 export const CLEAR_BTN = 'clearBtn';
 const OPERATOR_BTN = 'operatorBtn';
 const NUMBER_BTN = 'numberBtn';
-const EQUAL_BTN = 'equalBtn';
+export const EQUAL_BTN = 'equalBtn';
 
 // className, text, 
 export const buttonLabels : Array<LabelInfo> = [

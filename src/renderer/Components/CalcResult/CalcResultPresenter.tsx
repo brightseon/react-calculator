@@ -4,12 +4,13 @@ import Button from '../Button';
 
 interface IProps {
     currentExpression : string;
+    calculationResult : number;
 };
 
-const CalcResultPresenter : SFC<IProps> = ({ currentExpression }) => (
+const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult }) => (
     <div className={ styles.calcResultBox }>
         <div className={ styles.calcInputBox }>
-            <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression } readOnly />
+            <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression === '' ? calculationResult : currentExpression } readOnly />
         </div>
         <div className={ styles.btnBox }>
             <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />

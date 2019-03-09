@@ -8,10 +8,12 @@ interface IState {
 
 interface IMapStateToProps {
     currentExpression : string;
+    calculationResult : number;
 };
 
 const mapStateToProps = (state : IState) : IMapStateToProps => ({
-    currentExpression : state.calc.currentExpression
+    currentExpression : state.calc.currentExpression,
+    calculationResult : state.calc.calculationResult
 });
 
 export default connect<IMapStateToProps>(mapStateToProps)(CalcResult);
