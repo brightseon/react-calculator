@@ -56,7 +56,8 @@ const resetCurrentExpression = (state : CalcState) : CalcState => {
     return {
         ...state,
         currentExpression : '',
-        lastExpression : ''
+        lastExpression : '',
+        calculationResult : 0
     };
 };
 
@@ -64,7 +65,8 @@ const calculateExpression = (state : CalcState, action : CalculateAction) : Calc
     return {
         ...state,
         currentExpression : '',
-        lastExpression : state.currentExpression
+        lastExpression : state.currentExpression,
+        calculationResult : calculateUtil(state.currentExpression)
     };
 };
 

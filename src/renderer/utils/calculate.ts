@@ -1,28 +1,50 @@
-const divisionExpression = () => {
-    
+interface Expression {
+    operator : string;
+    firstNum : number;
+    lastNum : number;
 };
 
-const sum = (firstNum : number, lastNum : number) => {
+const divisionExpression = (currentExpression : string) : Expression => {
+    const regExp = /[\+\-\÷\×]/;
+    const operatorArr = currentExpression.match(regExp);
+    const operator = operatorArr[0];
+    const splitExpression = currentExpression.split(operator);
+    const firstNum = parseInt(splitExpression[0]);
+    const lastNum = parseInt(splitExpression[1]);
 
+    return {
+        operator,
+        firstNum,
+        lastNum
+    };
 };
 
-const minus = (firstNum : number, lastNum : number) => {
+const sum = (firstNum : number, lastNum : number) : number => {
+    console.log('calculate.ts sum start');
 
+    return firstNum + lastNum;
 };
 
-const multiplication = (firstNum : number, lastNum : number) => {
+const minus = (firstNum : number, lastNum : number) : number => {
+    console.log('calculate.ts minus start');
 
+    return firstNum - lastNum;
 };
 
-const division = (firstNum : number, lastNum : number) => {
+const multiplication = (firstNum : number, lastNum : number) : number => {
+    console.log('calculate.ts multiplication start');
 
+    return firstNum * lastNum;
+};
+
+const division = (firstNum : number, lastNum : number) : number => {
+    console.log('calculate.ts division start');
+
+    return firstNum / lastNum;
 };
 
 const calculate = (currentExpression : string) => {
-    // operator : string, firstNum : number, lastNum : number
-    const operator : string = '';
-    const firstNum : number = 0;
-    const lastNum : number = 0;
+    const { operator, firstNum, lastNum } = divisionExpression(currentExpression);
 
     switch(operator) {
         case '+' : 
