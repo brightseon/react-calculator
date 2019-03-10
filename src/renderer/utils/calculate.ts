@@ -35,7 +35,7 @@ const division = (firstNum : number, lastNum : number) : number => {
     return firstNum / lastNum;
 };
 
-const calculate = (currentExpression : string) => {
+const calculate = (currentExpression : string) : number => {
     const { operator, firstNum, lastNum } = divisionExpression(currentExpression);
 
     switch(operator) {

@@ -11,7 +11,7 @@ export interface CalcState {
 
 export interface MakeExpressionAction {
     type : typeof MAKE_EXPRESSION;
-    payload : ButtonType;
+    payload : ExpressionType;
 };
 
 export interface ResetExpressionAction {
@@ -22,6 +22,7 @@ export interface CalculateAction {
     type : typeof CALCULATE;
 };
 
-interface ButtonType {
-    button : number | string;
+interface ExpressionType {
+    button? : string;
+    expression? : string;
 };
