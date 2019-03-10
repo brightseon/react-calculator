@@ -1,7 +1,7 @@
 import CalcResult from './CalcResultContainer';
 import { connect } from 'react-redux';
 import { CalcState } from '../../store/modules/calc/types';
-import { makeExpression, resetExpression } from '../../store/modules/calc/calc';
+import { makeExpression, resetExpression, calculate } from '../../store/modules/calc/calc';
 import { Dispatch } from 'redux';
 
 interface IState {
@@ -17,6 +17,7 @@ interface IMapStateToProps {
 interface IMapDispatchToProps {
     makeExpression : (button? : number | string, typeExpression? : number | string) => void;
     resetExpression : () => void;
+    calculate : () => void;
 };
 
 const mapStateToProps = (state : IState) : IMapStateToProps => ({
@@ -27,7 +28,8 @@ const mapStateToProps = (state : IState) : IMapStateToProps => ({
 
 const mapDispatchToProps  = (dispatch : Dispatch) : IMapDispatchToProps => ({
     makeExpression : (button? : number | string, typeExpression? : number | string) => dispatch(makeExpression(button, typeExpression)),
-    resetExpression : () => dispatch(resetExpression())
+    resetExpression : () => dispatch(resetExpression()),
+    calculate : () => dispatch(calculate())
 });
 
 export default connect<IMapStateToProps, IMapDispatchToProps>(mapStateToProps, mapDispatchToProps)(CalcResult);

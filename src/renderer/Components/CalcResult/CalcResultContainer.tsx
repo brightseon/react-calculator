@@ -1,4 +1,4 @@
-import React, { SFC, ChangeEventHandler, ChangeEvent } from 'react';
+import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 
 interface IProps {
@@ -7,9 +7,10 @@ interface IProps {
     lastExpression : string;
     makeExpression : (button? : number | string, typingExpression? : number | string) => void;
     resetExpression : () => void;
+    calculate : () => void;
 };
 
-const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, makeExpression, resetExpression }) => {
+const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, makeExpression, resetExpression, calculate }) => {
     const typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
         e.preventDefault();
 
@@ -27,7 +28,13 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         }
     };
 
-    return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } typingExpression={ typingExpression } />;
+    const enterPress : KeyboardEventHandler = (e : KeyboardEvent) : void => {
+        if(e.key === 'Enter') {
+            calculate();
+        }
+    };
+
+    return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } typingExpression={ typingExpression } enterPress={ enterPress } />;
 };
 
 export default CalcResultContainer;
