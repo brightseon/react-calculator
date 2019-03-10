@@ -1,7 +1,7 @@
 import React, { SFC } from 'react';
 import CalcButtonPresenter from './CalcButtonPresenter';
 import { LabelInfo, CLEAR_BTN, EQUAL_BTN, OPERATOR_BTN, NUMBER_BTN } from '../../utils/buttonLabels';
-import { isFirstOperator } from '../../utils/calculate';
+import { isFirstOperator, isLastCharOperator } from '../../utils/calculate';
 
 interface IProps {
     makeExpression : (button : string) => void;
@@ -12,8 +12,6 @@ interface IProps {
 
 const CalcButtonContainer : SFC<IProps> = ({ makeExpression, resetExpression, calculate, currentExpression }) => {
     const makeClickFunc = (buttonLabel : LabelInfo) : Function => {
-        // let returnClickFunc : Function;
-        
         switch(buttonLabel.labelType) {
             case CLEAR_BTN :
                 return resetExpression;
@@ -27,13 +25,17 @@ const CalcButtonContainer : SFC<IProps> = ({ makeExpression, resetExpression, ca
     };
 
     const newMakeExpression = (buttonLabel : LabelInfo) : Function => {
-        const regExp = /[^\+\-\×\÷]/;
-
-        if((currentExpression === '' && buttonLabel.text !== 0 && regExp.test(buttonLabel.text.toString()) || currentExpression !== '')) {
+        if((currentExpression === '' && !isFirstOperator(buttonLabel.text)) || currentExpression !== '' && !isWritingOperator(buttonLabel.text)) {
             return makeExpression;
         } else {
             return () => {};
         }
+    };
+
+    const isWritingOperator = (expression : string) : boolean => {
+        const regExp = /[\+\-\*\/\.×÷]/;
+
+        return isLastCharOperator(currentExpression) && regExp.test(expression);
     };
 
     return <CalcButtonPresenter makeClickFunc={ makeClickFunc } />;

@@ -1,6 +1,6 @@
 export interface LabelInfo {
     labelType : string;
-    text : number | string;
+    text : string;
 };
 
 export const CLEAR_BTN = 'clearBtn';
