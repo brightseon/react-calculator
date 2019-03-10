@@ -4,8 +4,14 @@ interface Expression {
     lastNum : number;
 };
 
+const isFirstOperator = (currentExpression : string) : boolean => {
+    const regExp = /^[\+\-\*\/×÷]/;
+    
+    return regExp.test(currentExpression);
+};
+
 const divisionExpression = (currentExpression : string) : Expression => {
-    const regExp = /[\+\-\÷\×]/;
+    const regExp = /[\+\-\×\÷]/;
     const operatorArr = currentExpression.match(regExp);
     const operator = operatorArr[0];
     const splitExpression = currentExpression.split(operator);
@@ -36,26 +42,33 @@ const division = (firstNum : number, lastNum : number) : number => {
 };
 
 const calculate = (currentExpression : string) : number => {
-    const { operator, firstNum, lastNum } = divisionExpression(currentExpression);
-
-    switch(operator) {
-        case '+' : 
-            return sum(firstNum, lastNum);
-        
-        case '-' :
-            return minus(firstNum, lastNum);
-
-        case '*' :
-            return multiplication(firstNum, lastNum);
-
-        case '/' :
-            return division(firstNum, lastNum);
-
-        default :
-            console.error('유효하지 않은 식');
-
-            break;
+    if(currentExpression) {
+        const { operator, firstNum, lastNum } = divisionExpression(currentExpression);
+    
+        switch(operator) {
+            case '+' : 
+                return sum(firstNum, lastNum);
+            
+            case '-' :
+                return minus(firstNum, lastNum);
+    
+            case '*' :
+                return multiplication(firstNum, lastNum);
+    
+            case '/' :
+                return division(firstNum, lastNum);
+    
+            default :
+                console.error('유효하지 않은 식');
+    
+                break;
+        }
     }
+
+    return 0;
 };
 
-export default calculate;
+export {
+    isFirstOperator,
+    calculate
+};

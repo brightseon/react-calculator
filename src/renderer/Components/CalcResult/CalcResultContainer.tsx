@@ -1,5 +1,6 @@
 import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
+import { isFirstOperator } from '../../utils/calculate';
 
 interface IProps {
     currentExpression : string;
@@ -15,11 +16,10 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         e.preventDefault();
 
         const { target : { value : expression } } = e;
+        const newExpression = expression.indexOf('0') === 0 ? expression.substring(1) : expression;
         const regExp = /[^0-9\+\-\*\/×÷]/g;
 
-        if(!regExp.test(expression)) {
-            const newExpression = expression.indexOf('0') === 0 ? expression.substring(1) : expression;
-
+        if(!regExp.test(newExpression) && !isFirstOperator(newExpression)) {
             if(newExpression) {
                 const sendExpression = makeOperatorFormat(newExpression);
 

@@ -17,7 +17,7 @@ const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResul
         </div>
         <div className={ styles.calcInputBox }>
             <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression === '' ? calculationResult : currentExpression } 
-                onChange={ typingExpression } onKeyPress={ enterPress } />
+                onChange={ typingExpression } onKeyPress={ enterPress } autoFocus={ true } />
         </div>
         <div className={ styles.btnBox }>
             <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />

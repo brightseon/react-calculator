@@ -1,19 +1,19 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction } from './types';
-import calculateUtil from '../../../utils/calculate';
+import { calculate as calculateUtil } from '../../../utils/calculate';
 
-export const makeExpression = (button? : number | string, typingExpression? : number | string) : MakeExpressionAction => {
+export const makeExpression = (button? : string, typingExpression? : string) : MakeExpressionAction => {
     if(button) {
         return {
             type : MAKE_EXPRESSION,
             payload : {
-                button : typeof button !== 'string' ? button.toString() : button
+                button : button
             }
         };
     } else {
         return {
             type : MAKE_EXPRESSION,
             payload : {
-                expression : typeof typingExpression !== 'string' ? typingExpression.toString() : typingExpression
+                expression : typingExpression
             }
         }
     }

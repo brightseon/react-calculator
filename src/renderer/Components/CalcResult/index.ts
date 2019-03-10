@@ -27,7 +27,7 @@ const mapStateToProps = (state : IState) : IMapStateToProps => ({
 });
 
 const mapDispatchToProps  = (dispatch : Dispatch) : IMapDispatchToProps => ({
-    makeExpression : (button? : number | string, typeExpression? : number | string) => dispatch(makeExpression(button, typeExpression)),
+    makeExpression : (button? : string, typeExpression? : string) => dispatch(makeExpression(button, typeExpression)),
     resetExpression : () => dispatch(resetExpression()),
     calculate : () => dispatch(calculate())
 });
