@@ -2,13 +2,21 @@ import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, Res
 import calculateUtil from '../../../utils/calculate';
 
 export const makeExpression = (button? : number | string, typingExpression? : number | string) : MakeExpressionAction => {
-    return {
-        type : MAKE_EXPRESSION,
-        payload : {
-            button : button && button.toString(),
-            expression : typingExpression && typingExpression.toString()
+    if(button) {
+        return {
+            type : MAKE_EXPRESSION,
+            payload : {
+                button : typeof button !== 'string' ? button.toString() : button
+            }
+        };
+    } else {
+        return {
+            type : MAKE_EXPRESSION,
+            payload : {
+                expression : typeof typingExpression !== 'string' ? typingExpression.toString() : typingExpression
+            }
         }
-    };
+    }
 };
 
 export const resetExpression = () : ResetExpressionAction => {

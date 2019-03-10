@@ -15,17 +15,31 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         e.preventDefault();
 
         const { target : { value : expression } } = e;
-        const regExp = /[^0-9\+\-\*\/]/g;
+        const regExp = /[^0-9\+\-\*\/×÷]/g;
 
         if(!regExp.test(expression)) {
             const newExpression = expression.indexOf('0') === 0 ? expression.substring(1) : expression;
 
             if(newExpression) {
-                makeExpression(null, newExpression);
+                const sendExpression = makeOperatorFormat(newExpression);
+
+                makeExpression(null, sendExpression);
             } else {
                 resetExpression();
             }
         }
+    };
+
+    const makeOperatorFormat = (expression : string) : string => {
+        let returnExpression : string = expression;
+
+        if(expression.indexOf('*') !== -1) {
+            returnExpression = expression.replace('*', '×');
+        } else if(expression.indexOf('/') !== -1) {
+            returnExpression = expression.replace('/', '÷');
+        }
+
+        return returnExpression;
     };
 
     const enterPress : KeyboardEventHandler = (e : KeyboardEvent) : void => {
@@ -34,7 +48,8 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         }
     };
 
-    return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } typingExpression={ typingExpression } enterPress={ enterPress } />;
+    return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
+        typingExpression={ typingExpression } enterPress={ enterPress } />;
 };
 
 export default CalcResultContainer;
