@@ -1,3 +1,5 @@
+import { operatorRegExp, firstOperatorRegExp, operatorRegExpAddDot } from './regExps';
+
 interface Expression {
     operator : string;
     firstNum : number;
@@ -6,33 +8,33 @@ interface Expression {
 
 // 처음에 오는 문자가 +, -, *, /인지 확인하는 함수
 const isFirstOperator = (currentExpression : string) : boolean => {
-    const regExp = /^[\+\-\*\/×÷]/;
     
-    return regExp.test(currentExpression);
+    return firstOperatorRegExp.test(currentExpression);
 };
 
 // 마지막에 오는 문자가 +, -, *, /, .인지 확인하는 함수
 const isLastCharOperator = (currentExpression : string) : boolean => {
     const lastChar = currentExpression.charAt(currentExpression.length - 1);
-    const regExp = /[\+\-\*\/×÷\.]/;
 
-    return regExp.test(lastChar);
+    return operatorRegExpAddDot.test(lastChar);
 };
 
 // 문자열로 되어 있는 계산식을 연산자를 중심으로 나누는 함수
 const divisionExpression = (currentExpression : string) : Expression => {
-    const regExp = /[\+\-\×\÷]/;
-    const operatorArr = currentExpression.match(regExp);
-    const operator = operatorArr[0];
-    const splitExpression = currentExpression.split(operator);
-    const firstNum = parseInt(splitExpression[0]);
-    const lastNum = parseInt(splitExpression[1]);
+    const operatorArr = currentExpression.match(operatorRegExp);
 
-    return {
-        operator,
-        firstNum,
-        lastNum
-    };
+    if(operatorArr[0]) {
+        const operator = operatorArr[0];
+        const splitExpression = currentExpression.split(operator);
+        const firstNum = parseFloat(splitExpression[0]);
+        const lastNum = parseFloat(splitExpression[1]);
+    
+        return {
+            operator,
+            firstNum,
+            lastNum
+        };
+    }
 };
 
 const sum = (firstNum : number, lastNum : number) : number => {
