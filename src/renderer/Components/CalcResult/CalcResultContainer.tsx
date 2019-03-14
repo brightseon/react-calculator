@@ -1,7 +1,7 @@
 import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp } from '../../utils/regExps';
 
 interface IProps {
     currentExpression : string;
@@ -19,18 +19,17 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         const { target : { value : expression } } = e;
         const newExpression = expression.indexOf('0') === 0 ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
 
-        if(currentExpression !== newExpression && isWritingOperator(newExpression)) {
+        if(newExpression === '') resetExpression();
+
+        if(isWritingOperator(newExpression) || isFirstOperator(newExpression)) {
             return;
         }
 
-        if(!notCalcButtonRegExp.test(newExpression) && !isFirstOperator(newExpression)) {
-            if(newExpression) {
-                const sendExpression = makeOperatorFormat(newExpression);
+        if(!notCalcButtonRegExp.test(newExpression)) {
 
-                makeExpression(null, sendExpression);
-            } else {
-                resetExpression();
-            }
+            const sendExpression = makeOperatorFormat(newExpression);
+
+            makeExpression(null, sendExpression);
         }
     };
 
@@ -56,7 +55,7 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
     const enterPress : KeyboardEventHandler = (e : KeyboardEvent<HTMLInputElement>) : void => {
         const { currentTarget : { value } } = e;
 
-        if(e.key === 'Enter' && !isLastCharOperator(value)) {
+        if(e.key === 'Enter' && (!isLastCharOperator(value) || expressionRegExp.test(value))) {
             calculate();
         }
     };

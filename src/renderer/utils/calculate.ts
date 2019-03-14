@@ -8,7 +8,6 @@ interface Expression {
 
 // 처음에 오는 문자가 +, -, *, /인지 확인하는 함수
 const isFirstOperator = (currentExpression : string) : boolean => {
-    
     return firstOperatorRegExp.test(currentExpression);
 };
 
@@ -23,7 +22,7 @@ const isLastCharOperator = (currentExpression : string) : boolean => {
 const divisionExpression = (currentExpression : string) : Expression => {
     const operatorArr = currentExpression.match(operatorRegExp);
 
-    if(operatorArr[0]) {
+    if(operatorArr && operatorArr[0]) {
         const operator = operatorArr[0];
         const splitExpression = currentExpression.split(operator);
         const firstNum = parseFloat(splitExpression[0]);
@@ -57,23 +56,25 @@ const calculate = (currentExpression : string) : number => {
     if(currentExpression) {
         const { operator, firstNum, lastNum } = divisionExpression(currentExpression);
     
-        switch(operator) {
-            case '+' : 
-                return sum(firstNum, lastNum);
-            
-            case '-' :
-                return minus(firstNum, lastNum);
-    
-            case '*' :
-                return multiplication(firstNum, lastNum);
-    
-            case '/' :
-                return division(firstNum, lastNum);
-    
-            default :
-                console.error('유효하지 않은 식');
-    
-                break;
+        if(operator && firstNum && lastNum) {
+            switch(operator) {
+                case '+' : 
+                    return sum(firstNum, lastNum);
+                
+                case '-' :
+                    return minus(firstNum, lastNum);
+        
+                case '*' :
+                    return multiplication(firstNum, lastNum);
+        
+                case '/' :
+                    return division(firstNum, lastNum);
+        
+                default :
+                    console.error('유효하지 않은 식');
+        
+                    break;
+            }
         }
     }
 
