@@ -1,5 +1,4 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction } from './types';
-import { calculate as calculateUtil } from '../../../utils/calculate';
 
 export const makeExpression = (button? : string, typingExpression? : string) : MakeExpressionAction => {
     if(button) {
@@ -25,9 +24,12 @@ export const resetExpression = () : ResetExpressionAction => {
     };
 };
 
-export const calculate = () : CalculateAction => {
+export const calculate = (calcResult : number) : CalculateAction => {
     return {
-        type : CALCULATE
+        type : CALCULATE,
+        payload : {
+            calcResult
+        }
     };
 };
 
@@ -75,7 +77,7 @@ const calculateExpression = (state : CalcState, action : CalculateAction) : Calc
         ...state,
         currentExpression : '',
         lastExpression : state.currentExpression,
-        calculationResult : calculateUtil(state.currentExpression)
+        calculationResult : action.payload.calcResult
     };
 };
 

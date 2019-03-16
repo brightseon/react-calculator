@@ -1,13 +1,13 @@
 import React, { SFC } from 'react';
 import CalcButtonPresenter from './CalcButtonPresenter';
 import { LabelInfo, CLEAR_BTN, EQUAL_BTN } from '../../utils/buttonLabels';
-import { isFirstOperator, isLastCharOperator } from '../../utils/calculate';
+import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { operatorRegExpAddDot } from '../../utils/regExps';
 
 interface IProps {
     makeExpression : (button : string) => void;
     resetExpression : () => void;
-    calculate : () => void;
+    calculate : (calcResult : number) => void;
     currentExpression : string;
 };
 
@@ -35,7 +35,7 @@ const CalcButtonContainer : SFC<IProps> = ({ makeExpression, resetExpression, ca
 
     const newCalculate = () => {
         if(!isLastCharOperator(currentExpression)) {
-            calculate();
+            calculate(calculateUtil(currentExpression));
         }
     };
 

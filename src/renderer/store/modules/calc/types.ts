@@ -20,9 +20,14 @@ export interface ResetExpressionAction {
 
 export interface CalculateAction {
     type : typeof CALCULATE;
+    payload : CalcResultType;
 };
 
 interface ExpressionType {
     button? : string;
     expression? : string;
 };
+
+interface CalcResultType {
+    calcResult : number;
+}

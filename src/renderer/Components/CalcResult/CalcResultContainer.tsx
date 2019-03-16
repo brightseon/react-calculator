@@ -1,6 +1,6 @@
 import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
-import { isFirstOperator, isLastCharOperator } from '../../utils/calculate';
+import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp } from '../../utils/regExps';
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
     lastExpression : string;
     makeExpression : (button? : number | string, typingExpression? : number | string) => void;
     resetExpression : () => void;
-    calculate : () => void;
+    calculate : (calcResult : number) => void;
 };
 
 const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, makeExpression, resetExpression, calculate }) => {
@@ -55,7 +55,7 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         const { currentTarget : { value } } = e;
 
         if(e.key === 'Enter' && (!isLastCharOperator(value) || expressionRegExp.test(value))) {
-            calculate();
+            calculate(calculateUtil(currentExpression));
         }
     };
 

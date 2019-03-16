@@ -3,10 +3,10 @@ export interface LabelInfo {
     text : string;
 };
 
-export const CLEAR_BTN = 'clearBtn';
-export const OPERATOR_BTN = 'operatorBtn';
-export const NUMBER_BTN = 'numberBtn';
-export const EQUAL_BTN = 'equalBtn';
+export const CLEAR_BTN : string = 'clearBtn';
+export const OPERATOR_BTN : string = 'operatorBtn';
+export const NUMBER_BTN : string = 'numberBtn';
+export const EQUAL_BTN : string = 'equalBtn';
 
 // className, text, 
 export const buttonLabels : Array<LabelInfo> = [

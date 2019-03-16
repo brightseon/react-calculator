@@ -17,7 +17,7 @@ interface IMapStateToProps {
 interface IMapDispatchToProps {
     makeExpression : (button? : number | string, typeExpression? : number | string) => void;
     resetExpression : () => void;
-    calculate : () => void;
+    calculate : (calcResult : number) => void;
 };
 
 const mapStateToProps = (state : IState) : IMapStateToProps => ({
@@ -29,7 +29,7 @@ const mapStateToProps = (state : IState) : IMapStateToProps => ({
 const mapDispatchToProps  = (dispatch : Dispatch) : IMapDispatchToProps => ({
     makeExpression : (button? : string, typeExpression? : string) => dispatch(makeExpression(button, typeExpression)),
     resetExpression : () => dispatch(resetExpression()),
-    calculate : () => dispatch(calculate())
+    calculate : (calcResult) => dispatch(calculate(calcResult))
 });
 
 export default connect<IMapStateToProps, IMapDispatchToProps>(mapStateToProps, mapDispatchToProps)(CalcResult);
