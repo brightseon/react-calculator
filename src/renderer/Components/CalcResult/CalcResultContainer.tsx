@@ -1,7 +1,7 @@
 import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp } from '../../utils/regExps';
 
 interface IProps {
     currentExpression : string;
@@ -17,16 +17,15 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         e.preventDefault();
 
         const { target : { value : expression } } = e;
-        const newExpression = expression.indexOf('0') === 0 ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
-
-        if(newExpression === '') resetExpression();
+        const newExpression = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
+        
+        if(newExpression === '') return resetExpression();
 
         if(isWritingOperator(newExpression) || isFirstOperator(newExpression)) {
             return;
         }
 
         if(!notCalcButtonRegExp.test(newExpression)) {
-
             const sendExpression = makeOperatorFormat(newExpression);
 
             makeExpression(null, sendExpression);

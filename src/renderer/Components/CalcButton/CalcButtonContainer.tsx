@@ -43,7 +43,7 @@ const CalcButtonContainer : SFC<IProps> = ({ makeExpression, resetExpression, ca
         return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(expression);
     };
 
-    return <CalcButtonPresenter makeClickFunc={ makeClickFunc } />;
+    return <CalcButtonPresenter makeClickFunc={ makeClickFunc } isEmptyExpression={ currentExpression === '' } />;
 };
 
 export default CalcButtonContainer;

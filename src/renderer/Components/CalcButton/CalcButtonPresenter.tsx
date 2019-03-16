@@ -5,10 +5,11 @@ import { buttonLabels, CLEAR_BTN, EQUAL_BTN,LabelInfo } from '../../utils/button
 
 interface IProps {
     makeClickFunc : (buttonLabel : LabelInfo) => Function;
+    isEmptyExpression : boolean;
 };
 
 
-const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc }) => {
+const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc, isEmptyExpression }) => {
 
     return (
         <div className={ styles.calcButtonBox }>
@@ -19,7 +20,7 @@ const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc }) => {
 
                         return (
                             <Button key={ `${ buttonLabel.labelType }_${ buttonLabel.text }` } className={ styles[buttonLabel.labelType] } 
-                                onClick={ () => buttonLabel.labelType !== EQUAL_BTN && buttonLabel.labelType !== CLEAR_BTN  ? resultClickFunc(buttonLabel)(buttonLabel.text) : resultClickFunc() } 
+                                onClick={ () => buttonLabel.labelType !== EQUAL_BTN && buttonLabel.labelType !== CLEAR_BTN  ? resultClickFunc(buttonLabel)(isEmptyExpression && buttonLabel.text === '.' ? '0.' : buttonLabel.text) : resultClickFunc() } 
                                 text={ buttonLabel.text } />
                         );
                     }
