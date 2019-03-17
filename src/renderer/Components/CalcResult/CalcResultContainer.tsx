@@ -1,4 +1,4 @@
-import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
+import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, Ref } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
@@ -14,8 +14,14 @@ interface IProps {
 };
 
 class CalcResultContainer extends Component<IProps> {
+    calcResultRef = createRef<HTMLInputElement>();
+
+    componentDidUpdate = () => {
+        this.calcResultRef.current.focus();
+    };
+
     typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
-        const { resetExpression, makeExpression, currentExpression } = this.props;
+        const { resetExpression, makeExpression } = this.props;
 
         const { target : { value : expression } } = e;
         const newExpression : string = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
@@ -86,7 +92,7 @@ class CalcResultContainer extends Component<IProps> {
         const { currentExpression, calculationResult, lastExpression } = this.props;
 
         return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
-            typingExpression={ this.typingExpression } enterPress={ this.enterPress } />;
+            typingExpression={ this.typingExpression } enterPress={ this.enterPress } calcResultRef={ this.calcResultRef } />;
     };
 };
 
