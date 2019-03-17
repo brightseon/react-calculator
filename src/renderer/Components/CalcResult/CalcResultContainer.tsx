@@ -1,8 +1,8 @@
 import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExp } from '../../utils/regExps';
-import { isDotWriting, getLastChar } from '../../utils/commons';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp } from '../../utils/regExps';
+import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis } from '../../utils/commons';
 
 interface IProps {
     currentExpression : string;
@@ -39,8 +39,8 @@ class CalcResultContainer extends Component<IProps> {
         const isFirstOperatorResult = operatorRegExp.test(getLastChar(expression)) && isFirstOperator(expression);
         const isDotWritingResult = getLastChar(expression) === '.' && !isDotWriting(currentExpression);
         const isNotCalcButtonRegExp = notCalcButtonRegExp.test(expression);
-        const isWritingLeftParenthesisResult = getLastChar(expression) === '(' && !this.isWritingLeftParenthesis();
-        const isWritingRightParenthesisResult = getLastChar(expression) === ')' && !this.isWritingRightParenthesis();
+        const isWritingLeftParenthesisResult = getLastChar(expression) === '(' && !isWritingLeftParenthesis(currentExpression);
+        const isWritingRightParenthesisResult = getLastChar(expression) === ')' && !isWritingRightParenthesis(currentExpression);
 
         return (
             isWritingOperatorResult || isFirstOperatorResult || isDotWritingResult || 
@@ -48,46 +48,6 @@ class CalcResultContainer extends Component<IProps> {
         );
     };
     
-    // (를 쓸 수 있는지 확인한다.
-    isWritingLeftParenthesis = () : boolean => {
-        const { currentExpression } = this.props;
-        const lastChar = getLastChar(currentExpression);
-        // 식이 비어있는지 확인(비어있으면 true, 아니면 false)
-        const isLastCharEmptyStr = currentExpression === '';
-        // 계산식의 마지막 문자가 +, -, *, /인지 확인(+, -, *, /이라면 true, 아니면 false)
-        const isOperator = operatorRegExp.test(lastChar);
-        // 계산식에 (가 있는지 확인(있으면 true, 없으면 false)
-        const isLeftParenthesis = currentExpression.indexOf('(') !== -1;
-        // 계산식에 )가 있는지 확인(없으면 true, 있으면 false)
-        const isRightParenthesis = currentExpression.indexOf(')') === -1;
-        // 마지막 문자가 )인지 확인(마지막 문자가 ')'라면 true, 아니면 false)
-        const isLastCharRightParenthesis = lastChar === ')';
-
-        if(!isLastCharEmptyStr && !isOperator || (isLeftParenthesis && isRightParenthesis) || isLastCharRightParenthesis) {
-            return false;
-        }
-
-        return true;
-    };
-
-    // )를 쓸 수 있는지 확인한다.
-    isWritingRightParenthesis = () : boolean => {
-        const { currentExpression } = this.props;
-        const lastChar = getLastChar(currentExpression);
-        // 식이 비어있는지 확인(비어있다면 true, 아니면 false)
-        const isEmptyExpression = currentExpression === '';
-        // (가 있는지 확인(있다면 true, 없으면 false)
-        const isLeftParenthesis = currentExpression.indexOf('(') !== -1;
-        // 마지막 문자가 숫자인지 확인(숫자면 true, +, -, *, /, ., (, ) 이면 false)
-        const isLastCharNum = numRegExp.test(lastChar);
-
-        if(isEmptyExpression || !isLeftParenthesis || (isLeftParenthesis && !isLastCharNum)) {
-            return false;
-        }
-
-        return true;
-    };
-
     // 연산자를 쓸 수 있는지 확인한다.
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
