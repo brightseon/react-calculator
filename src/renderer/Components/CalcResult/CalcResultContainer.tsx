@@ -1,7 +1,7 @@
 import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
 import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis } from '../../utils/commons';
 
 interface IProps {
@@ -22,7 +22,7 @@ class CalcResultContainer extends Component<IProps> {
         
         if(newExpression === '') return resetExpression();
 
-        if(currentExpression.length < newExpression.length && this.makeCondition(newExpression)) {
+        if(this.makeCondition(newExpression)) {
             return;
         }
 
@@ -34,17 +34,21 @@ class CalcResultContainer extends Component<IProps> {
     // 방금 입력한 문자를 계산식에 넣을 수 있는지에 대한 조건을 만든다.
     makeCondition = (expression : string) : boolean => {
         const { currentExpression } = this.props;
+        const typingChar = getLastChar(expression);
+        const expressionLastChar = getLastChar(currentExpression);
         
+        const isExpressionDelete = currentExpression.length < expression.length;
         const isWritingOperatorResult = !this.isWritingOperator(expression);
-        const isFirstOperatorResult = operatorRegExp.test(getLastChar(expression)) && isFirstOperator(expression);
-        const isDotWritingResult = getLastChar(expression) === '.' && !isDotWriting(currentExpression);
+        const isFirstOperatorResult = operatorRegExp.test(typingChar) && isFirstOperator(expression);
+        const isDotWritingResult = typingChar === '.' && !isDotWriting(currentExpression);
         const isNotCalcButtonRegExp = notCalcButtonRegExp.test(expression);
-        const isWritingLeftParenthesisResult = getLastChar(expression) === '(' && !isWritingLeftParenthesis(currentExpression);
-        const isWritingRightParenthesisResult = getLastChar(expression) === ')' && !isWritingRightParenthesis(currentExpression);
+        const isWritingLeftParenthesisResult = typingChar === '(' && !isWritingLeftParenthesis(currentExpression);
+        const isWritingRightParenthesisResult = typingChar === ')' && !isWritingRightParenthesis(currentExpression);
+        const isNumTyping = expressionLastChar === ')' && numRegExpAddDot.test(typingChar);
 
-        return (
+        return isExpressionDelete && (
             isWritingOperatorResult || isFirstOperatorResult || isDotWritingResult || 
-            isNotCalcButtonRegExp || isWritingLeftParenthesisResult || isWritingRightParenthesisResult
+            isNotCalcButtonRegExp || isWritingLeftParenthesisResult || isWritingRightParenthesisResult || isNumTyping
         );
     };
     

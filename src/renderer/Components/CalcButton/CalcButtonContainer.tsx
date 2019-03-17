@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CalcButtonPresenter from './CalcButtonPresenter';
 import { LabelInfo, CLEAR_BTN, EQUAL_BTN } from '../../utils/buttonLabels';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { operatorRegExpAddDot } from '../../utils/regExps';
-import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis} from '../../utils/commons';
+import { operatorRegExpAddDot, numRegExpAddDot } from '../../utils/regExps';
+import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis, getLastChar} from '../../utils/commons';
 
 interface IProps {
     makeExpression : (button : string) => void;
@@ -48,8 +48,12 @@ class CalcButtonContainer extends Component<IProps> {
         const isDotWritingResult : boolean = lastChar === '.' && !isDotWriting(currentExpression);
         const isWritingLeftParenthesisResult : boolean = lastChar === '(' && !isWritingLeftParenthesis(currentExpression);
         const isWritingRightParenthesisResult : boolean = lastChar === ')' && !isWritingRightParenthesis(currentExpression);
+        const isNumTyping = getLastChar(currentExpression) === ')' && numRegExpAddDot.test(lastChar);
 
-        return isFirstOperatorResult || isWritingOperatorResult || isDotWritingResult || isWritingLeftParenthesisResult || isWritingRightParenthesisResult;
+        return (
+            isFirstOperatorResult || isWritingOperatorResult || isDotWritingResult || 
+            isWritingLeftParenthesisResult || isWritingRightParenthesisResult || isNumTyping
+        );
     };
 
     newCalculate = () => {
