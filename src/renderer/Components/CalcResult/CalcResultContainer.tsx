@@ -1,7 +1,7 @@
 import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp } from '../../utils/regExps';
 import { isDotWriting } from '../../utils/commons';
 
 interface IProps {
@@ -16,14 +16,14 @@ interface IProps {
 class CalcResultContainer extends Component<IProps> {
     typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
         e.preventDefault();
-        const { resetExpression, makeExpression, currentExpression } = this.props;
+        const { resetExpression, makeExpression } = this.props;
 
         const { target : { value : expression } } = e;
         const newExpression : string = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
         
         if(newExpression === '') return resetExpression();
 
-        if(!this.isWritingOperator(newExpression) || isFirstOperator(newExpression) || (newExpression.slice(-1) === '.' && !isDotWriting(currentExpression))) {
+        if(this.makeCondition(newExpression)) {
             return;
         }
 
@@ -34,11 +34,21 @@ class CalcResultContainer extends Component<IProps> {
         }
     };
 
+    makeCondition = (expression : string) : boolean => {
+        const { currentExpression } = this.props;
+
+        const isWritingOperatorResult = !this.isWritingOperator(expression);
+        const isFirstOperatorResult = isFirstOperator(expression);
+        const isDotWritingResult = expression.charAt(expression.length - 1) === '.' && !isDotWriting(currentExpression);
+
+        return isWritingOperatorResult || isFirstOperatorResult || isDotWritingResult;
+    };
+
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
         const currentTypingChar = expression.charAt(expression.length - 1);
 
-        return (isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar)) ? false : true;
+        return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar) ? false : true;
     };
 
     makeOperatorFormat = (expression : string) : string => {

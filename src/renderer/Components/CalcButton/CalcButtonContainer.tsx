@@ -29,13 +29,23 @@ class CalcButtonContainer extends Component<IProps> {
     };
 
     newMakeExpression = (buttonLabel : LabelInfo) : Function => {
-        const { makeExpression, currentExpression } = this.props;
+        const { makeExpression } = this.props;
 
-        if((currentExpression === '' && isFirstOperator(buttonLabel.text) || (currentExpression !== '' && !this.isWritingOperator(buttonLabel.text) || (buttonLabel.text === '.' && !isDotWriting(currentExpression))))) {
+        if(this.makeCondition(buttonLabel.text)) {
             return () => {};
         }
 
         return makeExpression;
+    };
+
+    makeCondition = (lastChar : string) : boolean => {
+        const { currentExpression } = this.props;
+
+        const isFirstOperatorResult : boolean = currentExpression === '' && isFirstOperator(lastChar);
+        const isWritingOperatorResult : boolean = currentExpression !== '' && !this.isWritingOperator(lastChar);
+        const isDotWritingResult : boolean = lastChar === '.' && !isDotWriting(currentExpression);
+
+        return isFirstOperatorResult || isWritingOperatorResult || isDotWritingResult;
     };
 
     newCalculate = () => {
@@ -49,7 +59,7 @@ class CalcButtonContainer extends Component<IProps> {
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
 
-        return (isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(expression)) ? false : true;
+        return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(expression) ? false : true;
     };
 
     render() {
