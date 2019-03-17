@@ -2,7 +2,7 @@ import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp } from '../../utils/regExps';
-import { isDotWriting } from '../../utils/commons';
+import { isDotWriting, getLastChar } from '../../utils/commons';
 
 interface IProps {
     currentExpression : string;
@@ -39,14 +39,14 @@ class CalcResultContainer extends Component<IProps> {
 
         const isWritingOperatorResult = !this.isWritingOperator(expression);
         const isFirstOperatorResult = isFirstOperator(expression);
-        const isDotWritingResult = expression.charAt(expression.length - 1) === '.' && !isDotWriting(currentExpression);
+        const isDotWritingResult = getLastChar(expression) === '.' && !isDotWriting(currentExpression);
 
         return isWritingOperatorResult || isFirstOperatorResult || isDotWritingResult;
     };
 
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
-        const currentTypingChar = expression.charAt(expression.length - 1);
+        const currentTypingChar = getLastChar(expression);
 
         return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar) ? false : true;
     };

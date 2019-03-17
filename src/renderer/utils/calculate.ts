@@ -1,4 +1,5 @@
 import { operatorRegExp, firstOperatorRegExp, operatorRegExpAddDot, multipleDivision } from './regExps';
+import { getLastChar } from './commons';
 
 interface Expression {
     firstNum : number;
@@ -12,7 +13,7 @@ const isFirstOperator = (currentExpression : string) : boolean => {
 
 // 마지막에 오는 문자가 +, -, *, /, .인지 확인하는 함수
 const isLastCharOperator = (currentExpression : string) : boolean => {
-    const lastChar : string = currentExpression.charAt(currentExpression.length - 1);
+    const lastChar : string = getLastChar(currentExpression);
 
     return operatorRegExpAddDot.test(lastChar);
 };

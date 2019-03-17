@@ -25,6 +25,13 @@ const isDotWriting = (currentExpression : string) : boolean => {
     return result;
 };
 
+const getLastChar = (str : string) : string => {
+    const lastChar = str.charAt(str.length - 1);
+    
+    return lastChar;
+};
+
 export {
-    isDotWriting
+    isDotWriting,
+    getLastChar
 };
