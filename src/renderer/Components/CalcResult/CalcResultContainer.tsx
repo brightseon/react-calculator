@@ -1,7 +1,8 @@
-import React, { SFC, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
+import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp } from '../../utils/regExps';
+import { isDotWriting } from '../../utils/commons';
 
 interface IProps {
     currentExpression : string;
@@ -12,34 +13,35 @@ interface IProps {
     calculate : (calcResult : number) => void;
 };
 
-const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, makeExpression, resetExpression, calculate }) => {
-    const typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
+class CalcResultContainer extends Component<IProps> {
+    typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
         e.preventDefault();
+        const { resetExpression, makeExpression, currentExpression } = this.props;
 
         const { target : { value : expression } } = e;
-        const newExpression = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
+        const newExpression : string = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
         
         if(newExpression === '') return resetExpression();
 
-        if(isWritingOperator(newExpression) || isFirstOperator(newExpression)) {
+        if(!this.isWritingOperator(newExpression) || isFirstOperator(newExpression) || (newExpression.slice(-1) === '.' && !isDotWriting(currentExpression))) {
             return;
         }
 
         if(!notCalcButtonRegExp.test(newExpression)) {
-            const sendExpression = makeOperatorFormat(newExpression);
+            const sendExpression = this.makeOperatorFormat(newExpression);
 
             makeExpression(null, sendExpression);
         }
     };
 
-    const isWritingOperator = (expression : string) : boolean => {
-        const currentTypingChar = expression.replace(currentExpression, '');
+    isWritingOperator = (expression : string) : boolean => {
+        const { currentExpression } = this.props;
+        const currentTypingChar = expression.charAt(expression.length - 1);
 
-        return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar);
+        return (isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar)) ? false : true;
     };
 
-    // 자판으로 쳤을 경우, *와 /를 ×과 ÷로 바꿔주는 함수
-    const makeOperatorFormat = (expression : string) : string => {
+    makeOperatorFormat = (expression : string) : string => {
         let returnExpression : string = expression;
 
         if(expression.indexOf('*') !== -1) {
@@ -51,16 +53,21 @@ const CalcResultContainer : SFC<IProps> = ({ currentExpression, calculationResul
         return returnExpression;
     };
 
-    const enterPress : KeyboardEventHandler = (e : KeyboardEvent<HTMLInputElement>) : void => {
+    enterPress : KeyboardEventHandler = (e : KeyboardEvent<HTMLInputElement>) : void => {
         const { currentTarget : { value } } = e;
+        const { calculate, currentExpression } = this.props;
 
         if(e.key === 'Enter' && (!isLastCharOperator(value) || expressionRegExp.test(value))) {
             calculate(calculateUtil(currentExpression));
         }
     };
 
-    return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
-        typingExpression={ typingExpression } enterPress={ enterPress } />;
+    render() {
+        const { currentExpression, calculationResult, lastExpression } = this.props;
+
+        return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
+            typingExpression={ this.typingExpression } enterPress={ this.enterPress } />;
+    }
 };
 
 export default CalcResultContainer;

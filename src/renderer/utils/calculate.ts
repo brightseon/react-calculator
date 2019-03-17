@@ -1,4 +1,4 @@
-import { operatorRegExp, firstOperatorRegExp, operatorRegExpAddDot, multipleDivision, sumMinus } from './regExps';
+import { operatorRegExp, firstOperatorRegExp, operatorRegExpAddDot, multipleDivision } from './regExps';
 
 interface Expression {
     firstNum : number;
