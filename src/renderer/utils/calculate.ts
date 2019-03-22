@@ -1,10 +1,15 @@
-import { operatorRegExp, firstOperatorRegExp, operatorRegExpAddDot, multipleDivision } from './regExps';
+import { operatorRegExp, operatorRegExpGlobal, firstOperatorRegExp, operatorRegExpAddDot, multipleDivision, parenthesisExpressionRegExp, parenthesisRegExp } from './regExps';
 import { getLastChar } from './commons';
 
 interface Expression {
     firstNum : number;
     lastNum : number;
 };
+
+interface SwitchOperatorReturnType {
+    calcResult : number;
+    currentExpression : string;
+}
 
 // 처음에 오는 문자가 +, -, *, /인지 확인하는 함수
 const isFirstOperator = (currentExpression : string) : boolean => {
@@ -52,7 +57,7 @@ const divisionExpression = (currentExpression : string, operator : string) : Exp
 
 // 연산자 배열 만드는 함수
 const makeOperatorArr = (currentExpression : string) : string[] => {
-    const operatorArr = currentExpression.match(operatorRegExp);
+    const operatorArr = currentExpression.match(operatorRegExpGlobal);
 
     return resortOperatorArr(operatorArr);
 };
@@ -66,6 +71,46 @@ const resortOperatorArr = (operatorArr : string[]) : string[] => {
     });
 
     return resortOperator;
+};
+
+const switchOperator = (expression : string, operator : string, firstNum : number, lastNum : number, changeValue? : string) : SwitchOperatorReturnType => {
+    let currentExpression : string = expression;
+    let calcResult : number = 0;
+    const searchValue : string = changeValue ? changeValue : `${ firstNum }${ operator }${ lastNum }`;
+
+    switch(operator) {
+        case '+' : 
+            calcResult = sum(firstNum, lastNum);
+            currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
+            break;
+            
+        case '-' :
+            calcResult = minus(firstNum, lastNum);
+            currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
+            break;
+            
+        case '*' :
+        case '×' :
+            calcResult = multiplication(firstNum, lastNum);
+            currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
+            break;
+            
+        case '/' :
+        case '÷' :
+            calcResult = division(firstNum, lastNum);
+            currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
+            break;
+
+        default :
+            console.error('유효하지 않은 식');
+
+            break;
+    }
+
+    return {
+        calcResult,
+        currentExpression
+    };
 };
 
 const replaceCurrentExpression = (currentExpression : string, searchValue : string, replaceValue : string) : string => {
@@ -94,39 +139,29 @@ const calculate = (expression : string) : number => {
     let currentExpression : string = expression;
     let calcResult : number = 0;
 
+    const parenthesisExpressionArr = currentExpression.match(parenthesisExpressionRegExp);
+
+    if(parenthesisExpressionArr && parenthesisExpressionArr.length > 0) {
+        parenthesisExpressionArr.map((expression : string) => {
+            const operator = expression.match(operatorRegExp)[0];
+            const newExpression = expression.replace(parenthesisRegExp, '');
+            const { firstNum, lastNum } = divisionExpression(newExpression, operator);
+            
+            const { currentExpression : returnExpression, calcResult : value } = switchOperator(currentExpression, operator, firstNum, lastNum, expression);
+
+            currentExpression = returnExpression;
+            calcResult = value;
+        });
+    }
+
     makeOperatorArr(currentExpression).map((currentOperator : string) => {
         const { firstNum, lastNum } = divisionExpression(currentExpression, currentOperator);
-        const searchValue = `${ firstNum }${ currentOperator }${ lastNum }`;
 
         if(firstNum && lastNum) {
-            switch(currentOperator) {
-                case '+' : 
-                    calcResult = sum(firstNum, lastNum);
-                    currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
-                    break;
-                    
-                case '-' :
-                    calcResult = minus(firstNum, lastNum);
-                    currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
-                    break;
-                    
-                case '*' :
-                case '×' :
-                    calcResult = multiplication(firstNum, lastNum);
-                    currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
-                    break;
-                    
-                case '/' :
-                case '÷' :
-                    calcResult = division(firstNum, lastNum);
-                    currentExpression = replaceCurrentExpression(currentExpression, searchValue, calcResult.toString());
-                    break;
-        
-                default :
-                    console.error('유효하지 않은 식');
-        
-                    break;
-            }
+            const { currentExpression : returnExpression, calcResult : value } = switchOperator(currentExpression, currentOperator, firstNum, lastNum);
+
+            currentExpression = returnExpression;
+            calcResult = value;
         }
     });
 

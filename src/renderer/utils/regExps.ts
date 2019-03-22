@@ -1,4 +1,5 @@
 export const operatorRegExp : RegExp = /[\+\-\*\/\×\÷]/;
+export const operatorRegExpGlobal : RegExp = /[\+\-\*\/\×\÷]/g;
 export const firstOperatorRegExp : RegExp = /^[\+\-\*\/\×\÷]/;
 export const operatorRegExpAddDot : RegExp = /[\+\-\*\/\×\÷\.]/;
 export const notCalcButtonRegExp : RegExp = /[^0-9\+\-\*\/\×\÷\(\)\.]/;
@@ -7,3 +8,5 @@ export const zeroDotRegExp : RegExp = /0[\.]/;
 export const multipleDivision : RegExp = /[\*\×\/\÷]/;
 export const numRegExp : RegExp = /[0-9]/;
 export const numRegExpAddDot : RegExp = /[0-9\.]/;
+export const parenthesisExpressionRegExp : RegExp = /[\(][0-9]+[\+\-\*\/\×\÷][0-9]+[\)]/g;
+export const parenthesisRegExp : RegExp = /[\(\)]/g;
