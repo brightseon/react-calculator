@@ -1,7 +1,7 @@
 import CalcResult from './CalcResultContainer';
 import { connect } from 'react-redux';
-import { CalcState } from '../../store/modules/calc/types';
-import { makeExpression, resetExpression, calculate } from '../../store/modules/calc/calc';
+import { CalcState } from '../../redux/modules/calc/types';
+import { makeExpression, resetExpression, calculate } from '../../redux/modules/calc/calc';
 import { Dispatch } from 'redux';
 
 interface IState {

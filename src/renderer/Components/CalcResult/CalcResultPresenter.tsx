@@ -9,12 +9,14 @@ interface IProps {
     typingExpression : (e : ChangeEvent) => void;
     enterPress : (e : KeyboardEvent) => void;
     calcResultRef : Ref<HTMLInputElement>;
+    copyExpression : () => void;
+    lastExpressionRef : Ref<HTMLInputElement>;
 };
 
-const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef }) => (
+const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef, copyExpression, lastExpressionRef }) => (
     <div className={ styles.calcResultBox }>
         <div className={ styles.lastExpressionBox }>
-            <span className={ styles.lastExpression }>{ lastExpression }</span>
+            <input className={ styles.lastExpression } value={ lastExpression } ref={ lastExpressionRef } readOnly />
         </div>
         <div className={ styles.calcInputBox }>
             <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression === '' ? calculationResult : currentExpression } 
@@ -22,7 +24,7 @@ const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResul
         </div>
         <div className={ styles.btnBox }>
             <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />
-            <Button className={ styles.commonBtn } text={ 'COPY' } onClick={ null } />
+            <Button className={ styles.commonBtn } text={ 'COPY' } onClick={ copyExpression } />
         </div>
     </div>
 );

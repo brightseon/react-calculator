@@ -15,6 +15,7 @@ interface IProps {
 
 class CalcResultContainer extends Component<IProps> {
     calcResultRef = createRef<HTMLInputElement>();
+    lastExpressionRef = createRef<HTMLInputElement>();
 
     componentDidUpdate = () => {
         this.calcResultRef.current.focus();
@@ -88,11 +89,22 @@ class CalcResultContainer extends Component<IProps> {
         }
     };
 
+    // 계산식을 클립보드로 복사
+    copyExpression = () => {
+        const { lastExpression } = this.props;
+
+        if(lastExpression) {
+            this.lastExpressionRef.current.select();
+            document.execCommand('Copy');
+        }
+    };
+
     render() {
         const { currentExpression, calculationResult, lastExpression } = this.props;
 
         return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
-            typingExpression={ this.typingExpression } enterPress={ this.enterPress } calcResultRef={ this.calcResultRef } />;
+            typingExpression={ this.typingExpression } enterPress={ this.enterPress } calcResultRef={ this.calcResultRef } 
+            copyExpression={ this.copyExpression } lastExpressionRef={ this.lastExpressionRef } />;
     };
 };
 

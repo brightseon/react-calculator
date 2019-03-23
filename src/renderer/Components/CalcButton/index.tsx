@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import CaclButton from './CalcButtonContainer';
-import { makeExpression, resetExpression, calculate } from '../../store/modules/calc/calc';
+import { makeExpression, resetExpression, calculate } from '../../redux/modules/calc/calc';
 import { Dispatch } from 'redux';
-import { CalcState } from '../../store/modules/calc/types';
+import { CalcState } from '../../redux/modules/calc/types';
 
 interface IState {
     calc : CalcState;
