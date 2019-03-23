@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
-import calc from './modules/calc/calc';
+import calc from './modules/calc';
+import sidebar from './modules/sidebar';
 
 const reducer = combineReducers({
-    calc
+    calc,
+    sidebar
 });
 
 const store = createStore(reducer);

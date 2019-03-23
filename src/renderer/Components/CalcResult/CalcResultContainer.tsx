@@ -11,6 +11,7 @@ interface IProps {
     makeExpression : (button? : number | string, typingExpression? : number | string) => void;
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
+    openSidebar : (isSetting : boolean) => void;
 };
 
 class CalcResultContainer extends Component<IProps> {
@@ -100,11 +101,11 @@ class CalcResultContainer extends Component<IProps> {
     };
 
     render() {
-        const { currentExpression, calculationResult, lastExpression } = this.props;
+        const { currentExpression, calculationResult, lastExpression, openSidebar } = this.props;
 
         return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
             typingExpression={ this.typingExpression } enterPress={ this.enterPress } calcResultRef={ this.calcResultRef } 
-            copyExpression={ this.copyExpression } lastExpressionRef={ this.lastExpressionRef } />;
+            copyExpression={ this.copyExpression } lastExpressionRef={ this.lastExpressionRef } openSidebar={ openSidebar } />;
     };
 };
 

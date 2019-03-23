@@ -2,7 +2,11 @@ import React, { Component, MouseEventHandler } from 'react';
 import HeaderPresenter from './HeaderPresenter';
 import { ipcRenderer } from 'electron';
 
-class HeaderContainer extends Component {
+interface IProps {
+    openSidebar : (isSetting : boolean) => void;
+};
+
+class HeaderContainer extends Component<IProps> {
 
     closeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-close');
@@ -17,10 +21,11 @@ class HeaderContainer extends Component {
     }
 
     render() {
-        const { closeWindow, maximizeWindow, minimizeWindow } = this;
+        const { closeWindow, maximizeWindow, minimizeWindow, props : { openSidebar } } = this;
 
-        return <HeaderPresenter closeWindow={ closeWindow } maximizeWindow={ maximizeWindow } minimizeWindow={ minimizeWindow } />;
+        return <HeaderPresenter closeWindow={ closeWindow } maximizeWindow={ maximizeWindow } minimizeWindow={ minimizeWindow }
+            openSidebar={ openSidebar } />;
     };
-}
+};
 
 export default HeaderContainer;

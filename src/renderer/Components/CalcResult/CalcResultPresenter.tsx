@@ -11,9 +11,10 @@ interface IProps {
     calcResultRef : Ref<HTMLInputElement>;
     copyExpression : () => void;
     lastExpressionRef : Ref<HTMLInputElement>;
+    openSidebar : (isSetting : boolean) => void;
 };
 
-const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef, copyExpression, lastExpressionRef }) => (
+const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef, copyExpression, lastExpressionRef, openSidebar }) => (
     <div className={ styles.calcResultBox }>
         <div className={ styles.lastExpressionBox }>
             <input className={ styles.lastExpression } value={ lastExpression } ref={ lastExpressionRef } readOnly />
@@ -23,7 +24,7 @@ const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResul
                 onChange={ typingExpression } onKeyPress={ enterPress } autoFocus={ true } ref={ calcResultRef } />
         </div>
         <div className={ styles.btnBox }>
-            <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ null } />
+            <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ () => openSidebar(false) } />
             <Button className={ styles.commonBtn } text={ 'COPY' } onClick={ copyExpression } />
         </div>
     </div>

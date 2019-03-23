@@ -13,6 +13,10 @@ interface IProps {
 };
 
 class CalcButtonContainer extends Component<IProps> {
+    // shouldComponentUpdate = () : boolean => {
+    //     return false;
+    // };
+
     // 누른 버튼에 따라 onClick 이벤트를 결정
     makeClickFunc = (buttonLabel : LabelInfo) : Function => {
         const { resetExpression } = this.props;

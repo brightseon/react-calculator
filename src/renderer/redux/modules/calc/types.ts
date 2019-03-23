@@ -1,10 +1,11 @@
 export const MAKE_EXPRESSION = 'MAKE_EXPRESSION';
 export const RESET_EXPRESSION = 'RESET_EXPRESSION';
 export const CALCULATE = 'CALCULATE';
+export const SET_HISTORY = 'SET_HISTORY';
 
 export interface CalcState {
     currentExpression : string;
-    calcHistory : object[];
+    calcHistory : CalcHistoryType[];
     calculationResult : number;
     lastExpression : string;
 };
@@ -23,6 +24,10 @@ export interface CalculateAction {
     payload : CalcResultType;
 };
 
+export interface SetHistoryAction {
+    type : typeof SET_HISTORY;
+};
+
 interface ExpressionType {
     button? : string;
     expression? : string;
@@ -30,4 +35,9 @@ interface ExpressionType {
 
 interface CalcResultType {
     calcResult : number;
+};
+
+interface CalcHistoryType {
+    id : string;
+    expression : string;
 }

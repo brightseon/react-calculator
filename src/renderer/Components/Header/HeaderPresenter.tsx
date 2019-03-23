@@ -9,11 +9,12 @@ interface IProps {
     closeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
     maximizeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
     minimizeWindow : (e : React.MouseEvent<HTMLDivElement>) => void;
-}
+    openSidebar : (isSetting : boolean) => void;
+};
 
-const HeaderPresenter : React.SFC<IProps> = ({ closeWindow, maximizeWindow, minimizeWindow }) => (
+const HeaderPresenter : React.SFC<IProps> = ({ closeWindow, maximizeWindow, minimizeWindow, openSidebar }) => (
     <div className={ styles.header }>
-        <div className={ styles.menuBtn }>
+        <div className={ styles.menuBtn } onClick={ () => openSidebar(true) }>
             <img src={ menu } />
         </div>
         <div className={ styles.box }>

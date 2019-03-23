@@ -69,9 +69,14 @@ const isWritingRightParenthesis = (currentExpression : string) : boolean => {
     return true;
 };
 
+const makeUniqueId = () : string => {
+    return Math.random().toString(36);
+};
+
 export {
     isDotWriting,
     getLastChar,
     isWritingLeftParenthesis,
-    isWritingRightParenthesis
+    isWritingRightParenthesis,
+    makeUniqueId
 };
