@@ -14,6 +14,9 @@ class HeaderContainer extends Component<IProps> {
     };
 
     closeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
+        const { calcHistory } = this.props;
+
+        localStorage.setItem('history', JSON.stringify(calcHistory));
         ipcRenderer.send('window-close');
     };
 

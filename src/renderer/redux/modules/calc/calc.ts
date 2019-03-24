@@ -50,8 +50,6 @@ const initialState : CalcState = {
     lastExpression : ''
 };
 
-console.log('initialState : ', initialState);
-
 const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction) : CalcState => {
     switch (action.type) {
         case MAKE_EXPRESSION :
