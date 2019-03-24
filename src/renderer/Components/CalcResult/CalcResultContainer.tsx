@@ -2,7 +2,7 @@ import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
-import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis } from '../../utils/commons';
+import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis, makeUniqueId } from '../../utils/commons';
 
 interface IProps {
     currentExpression : string;
@@ -12,11 +12,20 @@ interface IProps {
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
     openSidebar : (isSetting : boolean) => void;
+    setHistory : (id : string) => void;
 };
 
 class CalcResultContainer extends Component<IProps> {
     calcResultRef = createRef<HTMLInputElement>();
     lastExpressionRef = createRef<HTMLInputElement>();
+
+    shouldComponentUpdate = (nextProps : Readonly<IProps>) : boolean => {
+        if(this.props.lastExpression !== nextProps.lastExpression || this.props.currentExpression !== nextProps.currentExpression || this.props.calculationResult !== nextProps.calculationResult) {
+            return true;
+        }
+
+        return false;
+    };
 
     componentDidUpdate = () => {
         this.calcResultRef.current.focus();
@@ -83,10 +92,11 @@ class CalcResultContainer extends Component<IProps> {
 
     enterPress : KeyboardEventHandler = (e : KeyboardEvent<HTMLInputElement>) : void => {
         const { currentTarget : { value } } = e;
-        const { calculate, currentExpression } = this.props;
+        const { calculate, currentExpression, setHistory } = this.props;
 
         if(e.key === 'Enter' && (!isLastCharOperator(value) || expressionRegExp.test(value))) {
             calculate(calculateUtil(currentExpression));
+            setHistory(makeUniqueId());
         }
     };
 

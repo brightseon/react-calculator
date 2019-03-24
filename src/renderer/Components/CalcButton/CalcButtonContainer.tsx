@@ -3,19 +3,20 @@ import CalcButtonPresenter from './CalcButtonPresenter';
 import { LabelInfo, CLEAR_BTN, EQUAL_BTN } from '../../utils/buttonLabels';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { operatorRegExpAddDot, numRegExpAddDot } from '../../utils/regExps';
-import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis, getLastChar} from '../../utils/commons';
+import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis, getLastChar, makeUniqueId } from '../../utils/commons';
 
 interface IProps {
     makeExpression : (button : string) => void;
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
     currentExpression : string;
+    addHistory : (id : string) => void;
 };
 
 class CalcButtonContainer extends Component<IProps> {
-    // shouldComponentUpdate = () : boolean => {
-    //     return false;
-    // };
+    shouldComponentUpdate = () : boolean => {
+        return false;
+    };
 
     // 누른 버튼에 따라 onClick 이벤트를 결정
     makeClickFunc = (buttonLabel : LabelInfo) : Function => {
@@ -61,10 +62,11 @@ class CalcButtonContainer extends Component<IProps> {
     };
 
     newCalculate = () => {
-        const { currentExpression, calculate } = this.props;
+        const { currentExpression, calculate, addHistory } = this.props;
 
         if(!isLastCharOperator(currentExpression)) {
             calculate(calculateUtil(currentExpression));
+            addHistory(makeUniqueId());
         }
     };
 

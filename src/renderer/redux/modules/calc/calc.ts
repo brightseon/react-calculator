@@ -34,18 +34,23 @@ export const calculate = (calcResult : number) : CalculateAction => {
     };
 };
 
-export const setHistory = () : SetHistoryAction => {
+export const setHistory = (id : string) : SetHistoryAction => {
     return {
-        type : SET_HISTORY
+        type : SET_HISTORY,
+        payload : {
+            id
+        }
     };
 };
 
 const initialState : CalcState = {
     currentExpression : '',
-    calcHistory : [],
+    calcHistory : JSON.parse(localStorage.getItem('history')) || [],
     calculationResult : 0,
     lastExpression : ''
 };
+
+console.log('initialState : ', initialState);
 
 const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction) : CalcState => {
     switch (action.type) {
@@ -59,10 +64,10 @@ const reducer = (state : CalcState = initialState, action : MakeExpressionAction
             return calculateExpression(state, action);
 
         case SET_HISTORY :
-            return setCalcHistory(state);
+            return setCalcHistory(state, action);
         
         default :
-            return initialState;
+            return state;
     }
 };
 
@@ -91,14 +96,12 @@ const calculateExpression = (state : CalcState, action : CalculateAction) : Calc
     };
 };
 
-const setCalcHistory = (state : CalcState) : CalcState => {
-    const id = makeUniqueId();
-    console.log('id : ', id);
+const setCalcHistory = (state : CalcState, action : SetHistoryAction) : CalcState => {
     return {
         ...state,
         calcHistory : state.calcHistory.concat({
-            id,
-            expression : state.lastExpression
+            id : action.payload.id,
+            expression : `${ state.lastExpression } = ${ state.calculationResult }`
         })
     };
 };

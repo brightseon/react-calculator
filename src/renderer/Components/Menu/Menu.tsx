@@ -1,4 +1,5 @@
 import React, { SFC } from 'react';
+import History from '../History';
 
 interface IProps {
     isSetting : boolean
@@ -7,7 +8,7 @@ interface IProps {
 const Menu : SFC<IProps> = ({ isSetting }) => (
     <div>
         {
-            isSetting ? <span>Setting</span> : <span>History</span>
+            isSetting ? <span>Setting</span> : <History />
         }
     </div>
 );

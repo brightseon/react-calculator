@@ -1,12 +1,17 @@
 import React, { Component, MouseEventHandler } from 'react';
 import HeaderPresenter from './HeaderPresenter';
 import { ipcRenderer } from 'electron';
+import { CalcHistoryType } from '../../redux/modules/calc/types';
 
 interface IProps {
     openSidebar : (isSetting : boolean) => void;
+    calcHistory : CalcHistoryType[];
 };
 
 class HeaderContainer extends Component<IProps> {
+    shouldComponentUpdate = () : boolean => {
+        return false;
+    };
 
     closeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-close');
@@ -18,7 +23,7 @@ class HeaderContainer extends Component<IProps> {
 
     minimizeWindow : MouseEventHandler<HTMLDivElement> = () : void => {
         ipcRenderer.send('window-minimize');
-    }
+    };
 
     render() {
         const { closeWindow, maximizeWindow, minimizeWindow, props : { openSidebar } } = this;

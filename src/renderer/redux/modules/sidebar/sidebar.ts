@@ -14,13 +14,13 @@ const initialState : SidebarState = {
     isSetting : false
 };
 
-const reducer = (state : SidebarState, action : OpenSidebarAction) : SidebarState => {
+const reducer = (state : SidebarState = initialState, action : OpenSidebarAction) : SidebarState => {
     switch(action.type) {
         case OPEN_SIDEBAR :
             return  applyOpenSidebar(state, action);
 
         default :
-            return initialState;
+            return state;
     }
 };
 

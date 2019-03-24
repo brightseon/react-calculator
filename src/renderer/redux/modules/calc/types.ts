@@ -26,6 +26,7 @@ export interface CalculateAction {
 
 export interface SetHistoryAction {
     type : typeof SET_HISTORY;
+    payload : HistoryType;
 };
 
 interface ExpressionType {
@@ -37,7 +38,11 @@ interface CalcResultType {
     calcResult : number;
 };
 
-interface CalcHistoryType {
+export interface CalcHistoryType {
     id : string;
     expression : string;
-}
+};
+
+interface HistoryType {
+    id : string;
+};

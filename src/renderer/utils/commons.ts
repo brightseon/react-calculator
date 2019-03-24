@@ -70,7 +70,7 @@ const isWritingRightParenthesis = (currentExpression : string) : boolean => {
 };
 
 const makeUniqueId = () : string => {
-    return Math.random().toString(36);
+    return Math.random().toString(36).substr(2, 16);
 };
 
 export {

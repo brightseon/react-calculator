@@ -1,7 +1,7 @@
 import CalcResult from './CalcResultContainer';
 import { connect } from 'react-redux';
 import { CalcState } from '../../redux/modules/calc/types';
-import { makeExpression, resetExpression, calculate } from '../../redux/modules/calc/calc';
+import { makeExpression, resetExpression, calculate, setHistory } from '../../redux/modules/calc/calc';
 import { openSidebar } from '../../redux/modules/sidebar/sidebar';
 import { Dispatch } from 'redux';
 
@@ -20,6 +20,7 @@ interface IMapDispatchToProps {
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
     openSidebar : (isSetting : boolean) => void;
+    setHistory : (id : string) => void;
 };
 
 const mapStateToProps = (state : IState) : IMapStateToProps => ({
@@ -32,7 +33,8 @@ const mapDispatchToProps  = (dispatch : Dispatch) : IMapDispatchToProps => ({
     makeExpression : (button? : string, typeExpression? : string) => dispatch(makeExpression(button, typeExpression)),
     resetExpression : () => dispatch(resetExpression()),
     calculate : (calcResult) => dispatch(calculate(calcResult)),
-    openSidebar : (isSetting : boolean) => dispatch(openSidebar(isSetting))
+    openSidebar : (isSetting : boolean) => dispatch(openSidebar(isSetting)),
+    setHistory : (id : string) => dispatch(setHistory(id))
 });
 
 export default connect<IMapStateToProps, IMapDispatchToProps>(mapStateToProps, mapDispatchToProps)(CalcResult);
