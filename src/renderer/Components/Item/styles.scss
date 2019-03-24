@@ -1,0 +1,18 @@
+.item {
+    width: 100%;
+    padding: 18px;
+    border-top: 1px solid #ECF0F1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    .check-box {
+
+    }
+
+    .expression {
+        color: $blackColor;
+        font-size: 24px;
+    }
+}

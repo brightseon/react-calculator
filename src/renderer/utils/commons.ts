@@ -1,4 +1,4 @@
-import { operatorRegExp, numRegExp } from './regExps';
+import { operatorRegExp, numRegExp, expressionRegExp } from './regExps';
 
 const getLastStrNum = (expression : string) : string => {
     const operatorArr : string[] = expression.match(operatorRegExp);
@@ -73,10 +73,18 @@ const makeUniqueId = () : string => {
     return Math.random().toString(36).substr(2, 16);
 };
 
+const makeBeautyExpression = (expression : string) : string => {
+    const operatorArr = expression.match(operatorRegExp);
+    const splitExpression = expression.split(operatorArr[0]);
+
+    return `${ splitExpression[0] } ${ operatorArr[0] } ${ splitExpression[1] }`;
+};
+
 export {
     isDotWriting,
     getLastChar,
     isWritingLeftParenthesis,
     isWritingRightParenthesis,
-    makeUniqueId
+    makeUniqueId,
+    makeBeautyExpression
 };

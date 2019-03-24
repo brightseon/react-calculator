@@ -1,5 +1,5 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction } from './types';
-import { makeUniqueId } from '../../../utils/commons';
+import { makeBeautyExpression } from '../../../utils/commons';
 
 export const makeExpression = (button? : string, typingExpression? : string) : MakeExpressionAction => {
     if(button) {
@@ -99,7 +99,7 @@ const setCalcHistory = (state : CalcState, action : SetHistoryAction) : CalcStat
         ...state,
         calcHistory : state.calcHistory.concat({
             id : action.payload.id,
-            expression : `${ state.lastExpression } = ${ state.calculationResult }`
+            expression : `${ makeBeautyExpression(state.lastExpression) } = ${ state.calculationResult }`
         })
     };
 };
