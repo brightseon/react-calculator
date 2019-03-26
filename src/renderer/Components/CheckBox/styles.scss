@@ -1,0 +1,34 @@
+.check-box {
+    display: flex;
+    align-content: center;
+
+    .check {
+        display: none;
+
+        &:checked + label {
+            &:before {
+                content: '\2714';
+                color: #FFF;
+            }
+
+            background-color: #E85A71;
+            border-color: #E85A71;
+        }
+    }
+    
+    .check-label {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #a3a1a1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: .2s;
+        
+        &:before:active {
+            transform: scale(0);
+        }
+    }
+}
