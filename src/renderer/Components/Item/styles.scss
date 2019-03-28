@@ -1,18 +1,20 @@
 .item {
     width: 100%;
     padding: 18px;
-    border-top: 1px solid #ECF0F1;
+    border-bottom: 1px solid #ECF0F1;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
 
-    .check-box {
-
+    &:hover {
+        background-color: #F4F5F9;
     }
 
     .expression {
         color: $blackColor;
         font-size: 24px;
+        text-align: right;
+        word-break: break-all;
     }
 }

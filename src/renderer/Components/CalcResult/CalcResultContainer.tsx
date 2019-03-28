@@ -1,4 +1,4 @@
-import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, Ref } from 'react';
+import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, Ref, MouseEventHandler, MouseEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
 import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
@@ -110,12 +110,22 @@ class CalcResultContainer extends Component<IProps> {
         }
     };
 
+    clickCalcResult : MouseEventHandler = (e : MouseEvent<HTMLInputElement>) => {
+        const { currentExpression } = this.props;
+        const len = currentExpression.length;
+        
+        e.preventDefault();
+        
+        this.calcResultRef.current.focus();
+        this.calcResultRef.current.setSelectionRange(len + 1, len + 1);
+    };
+
     render() {
         const { currentExpression, calculationResult, lastExpression, openSidebar } = this.props;
 
         return <ResultPresenter currentExpression={ currentExpression } calculationResult={ calculationResult } lastExpression={ lastExpression } 
             typingExpression={ this.typingExpression } enterPress={ this.enterPress } calcResultRef={ this.calcResultRef } 
-            copyExpression={ this.copyExpression } lastExpressionRef={ this.lastExpressionRef } openSidebar={ openSidebar } />;
+            copyExpression={ this.copyExpression } lastExpressionRef={ this.lastExpressionRef } openSidebar={ openSidebar } clickCalcResult={ this.clickCalcResult } />;
     };
 };
 

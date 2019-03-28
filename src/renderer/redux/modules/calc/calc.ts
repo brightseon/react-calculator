@@ -42,7 +42,7 @@ export const setHistory = (id : string) : SetHistoryAction => {
         }
     };
 };
-localStorage.removeItem('history');
+
 const initialState : CalcState = {
     currentExpression : '',
     calcHistory : JSON.parse(localStorage.getItem('history')) || [],

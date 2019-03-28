@@ -9,7 +9,7 @@
         flex: 1;
         display: grid;
         grid-auto-rows: min-content;
-        overflow: auto;
+        overflow-y: auto;
     }
 
     .buttons {

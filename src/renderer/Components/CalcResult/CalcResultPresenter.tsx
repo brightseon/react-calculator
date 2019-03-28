@@ -1,4 +1,4 @@
-import React, { SFC, ChangeEvent, KeyboardEvent, Ref } from 'react';
+import React, { SFC, ChangeEvent, KeyboardEvent, Ref, MouseEvent } from 'react';
 import styles from './styles.scss';
 import Button from '../Button';
 
@@ -12,16 +12,17 @@ interface IProps {
     copyExpression : () => void;
     lastExpressionRef : Ref<HTMLInputElement>;
     openSidebar : (isSetting : boolean) => void;
+    clickCalcResult : (e : MouseEvent<HTMLDivElement>) => void;
 };
 
-const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef, copyExpression, lastExpressionRef, openSidebar }) => (
+const CalcResultPresenter : SFC<IProps> = ({ currentExpression, calculationResult, lastExpression, typingExpression, enterPress, calcResultRef, copyExpression, lastExpressionRef, openSidebar, clickCalcResult }) => (
     <div className={ styles.calcResultBox }>
         <div className={ styles.lastExpressionBox }>
             <input className={ styles.lastExpression } value={ lastExpression } ref={ lastExpressionRef } readOnly />
         </div>
         <div className={ styles.calcInputBox }>
             <input className={ styles.calcResultInput } type="text" name="calcResult" value={ currentExpression === '' ? calculationResult : currentExpression } 
-                onChange={ typingExpression } onKeyPress={ enterPress } autoFocus={ true } ref={ calcResultRef } />
+                onChange={ typingExpression } onKeyPress={ enterPress } autoFocus={ true } ref={ calcResultRef } onClick={ clickCalcResult } />
         </div>
         <div className={ styles.btnBox }>
             <Button className={ styles.commonBtn } text={ 'HISTORY' } onClick={ () => openSidebar(false) } />
