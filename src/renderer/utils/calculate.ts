@@ -134,7 +134,7 @@ const division = (firstNum : number, lastNum : number) : number => {
 };
 
 const calculate = (expression : string) : number => {
-    if(!expression) return;
+    if(!expression || operatorRegExp.test(getLastChar(expression))) return;
 
     let currentExpression : string = expression;
     let calcResult : number = 0;
@@ -157,7 +157,7 @@ const calculate = (expression : string) : number => {
     makeOperatorArr(currentExpression).map((currentOperator : string) => {
         const { firstNum, lastNum } = divisionExpression(currentExpression, currentOperator);
 
-        if(firstNum && lastNum) {
+        if((firstNum === 0 || lastNum === 0) || (firstNum && lastNum)) {
             const { currentExpression : returnExpression, calcResult : value } = switchOperator(currentExpression, currentOperator, firstNum, lastNum);
 
             currentExpression = returnExpression;

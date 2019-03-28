@@ -9,8 +9,8 @@ React와 Electron을 사용한 계산기 데스크탑 앱
 ### 다운로드
 ---
 ```
-    npm or yarn install
-    npm or yarn start
+    yarn install
+    yarn start
 ```
 
 ### 프로젝트 스택
