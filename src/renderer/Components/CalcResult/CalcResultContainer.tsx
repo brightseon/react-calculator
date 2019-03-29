@@ -95,8 +95,12 @@ class CalcResultContainer extends Component<IProps> {
         const { calculate, currentExpression, setHistory } = this.props;
 
         if(e.key === 'Enter' && (!isLastCharOperator(value) || expressionRegExp.test(value))) {
-            calculate(calculateUtil(currentExpression));
-            setHistory(makeUniqueId());
+            const result = calculateUtil(currentExpression);
+
+            if(result || result === 0) {
+                calculate(result);
+                setHistory(makeUniqueId());
+            }
         }
     };
 

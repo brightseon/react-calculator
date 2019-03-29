@@ -134,7 +134,8 @@ const division = (firstNum : number, lastNum : number) : number => {
 };
 
 const calculate = (expression : string) : number => {
-    if(!expression || operatorRegExp.test(getLastChar(expression))) return;
+    const matchArr = expression.match(parenthesisRegExp);
+    if(!expression || operatorRegExp.test(getLastChar(expression)) || (matchArr && matchArr.length % 2 !== 0)) return;
 
     let currentExpression : string = expression;
     let calcResult : number = 0;

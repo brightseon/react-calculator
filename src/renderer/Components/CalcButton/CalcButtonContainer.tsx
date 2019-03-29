@@ -65,8 +65,12 @@ class CalcButtonContainer extends Component<IProps> {
         const { currentExpression, calculate, addHistory } = this.props;
 
         if(!isLastCharOperator(currentExpression)) {
-            calculate(calculateUtil(currentExpression));
-            addHistory(makeUniqueId());
+            const result = calculateUtil(currentExpression);
+
+            if(result || result === 0) {
+                calculate(result);
+                addHistory(makeUniqueId());
+            }
         }
     };
 
