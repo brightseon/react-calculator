@@ -1,7 +1,7 @@
 import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, Ref, MouseEventHandler, MouseEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, zeroDotRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
 import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis, makeUniqueId } from '../../utils/commons';
 
 interface IProps {
@@ -35,7 +35,7 @@ class CalcResultContainer extends Component<IProps> {
         const { resetExpression, makeExpression } = this.props;
 
         const { target : { value : expression } } = e;
-        const newExpression : string = expression.indexOf('0') === 0 && !zeroDotRegExp.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
+        const newExpression : string = expression.indexOf('0') === 0 && !operatorRegExpAddDot.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
         
         if(newExpression === '') return resetExpression();
 
