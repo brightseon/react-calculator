@@ -73,8 +73,9 @@ class CalcResultContainer extends Component<IProps> {
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
         const currentTypingChar = getLastChar(expression);
+        const isOperator = operatorRegExpAddDot.test(currentTypingChar);
 
-        return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar) ? false : true;
+        return (isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(currentTypingChar)) || (getLastChar(currentExpression) === '(' && isOperator) ? false : true;
     };
 
     // *, /를 ×, ÷로 변환한다.

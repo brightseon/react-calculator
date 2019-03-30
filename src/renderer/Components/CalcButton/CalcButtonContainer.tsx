@@ -77,8 +77,10 @@ class CalcButtonContainer extends Component<IProps> {
     // 연산자를 쓸 수 있는지 확인한다.
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
+        const isOperator = operatorRegExpAddDot.test(expression);
+        const lastChar = getLastChar(currentExpression);
 
-        return isLastCharOperator(currentExpression) && operatorRegExpAddDot.test(expression) ? false : true;
+        return (isLastCharOperator(currentExpression) && isOperator) || (getLastChar(currentExpression) === '(' && isOperator) ? false : true;
     };
 
     render() {
