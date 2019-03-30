@@ -9,9 +9,7 @@ interface IProps {
 };
 
 
-const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc, isEmptyExpression }) => {
-
-    return (
+const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc, isEmptyExpression }) => (
         <div className={ styles.calcButtonBox }>
             {
                 buttonLabels.map(
@@ -27,8 +25,6 @@ const CalcButtonPresenter : SFC<IProps> = ({ makeClickFunc, isEmptyExpression })
                 )
             }
         </div>
-    );
-}
-
+);
 
 export default CalcButtonPresenter;

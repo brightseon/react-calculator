@@ -14,7 +14,11 @@ interface IProps {
 };
 
 class CalcButtonContainer extends Component<IProps> {
-    shouldComponentUpdate = () : boolean => {
+    shouldComponentUpdate = (nextProps : Readonly<IProps>) : boolean => {
+        if(nextProps.currentExpression.length < 2) {
+            return true;
+        }
+
         return false;
     };
 
@@ -78,7 +82,6 @@ class CalcButtonContainer extends Component<IProps> {
     isWritingOperator = (expression : string) : boolean => {
         const { currentExpression } = this.props;
         const isOperator = operatorRegExpAddDot.test(expression);
-        const lastChar = getLastChar(currentExpression);
 
         return (isLastCharOperator(currentExpression) && isOperator) || (getLastChar(currentExpression) === '(' && isOperator) ? false : true;
     };
