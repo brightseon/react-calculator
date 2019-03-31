@@ -1,5 +1,6 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, 
-    CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction, ALL_REMOVE_HISTORY, AllRemoveHisotryAction
+    CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction, CHANGE_CHECK_VALUE, ChangeCheckValue, 
+    REMOVE_HISTORY, RemoveHistoryAction, ALL_REMOVE_HISTORY, AllRemoveHisotryAction
 } from './types';
 
 export const makeExpression = (expression : string) : MakeExpressionAction => {
@@ -35,6 +36,21 @@ export const setHistory = (id : string) : SetHistoryAction => {
     };
 };
 
+export const changeCheckValue = (id : string) : ChangeCheckValue => {
+    return {
+        type : CHANGE_CHECK_VALUE,
+        payload : {
+            id
+        }
+    };
+};
+
+export const removeHistory = () : RemoveHistoryAction => {
+    return {
+        type : REMOVE_HISTORY
+    };
+};
+
 export const resetHistory = () : AllRemoveHisotryAction => {
     return {
         type : ALL_REMOVE_HISTORY
@@ -48,7 +64,7 @@ const initialState : CalcState = {
     lastExpression : ''
 };
 
-const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction | AllRemoveHisotryAction) : CalcState => {
+const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction | ChangeCheckValue | RemoveHistoryAction | AllRemoveHisotryAction) : CalcState => {
     switch (action.type) {
         case MAKE_EXPRESSION :
             return setCurrentExpression(state, action);
@@ -61,6 +77,12 @@ const reducer = (state : CalcState = initialState, action : MakeExpressionAction
 
         case SET_HISTORY :
             return setCalcHistory(state, action);
+
+        case CHANGE_CHECK_VALUE :
+            return setIsChecked(state, action);
+
+        case REMOVE_HISTORY :
+            return removeChooseHistory(state);
 
         case ALL_REMOVE_HISTORY :
             return resetCalcHistory(state);
@@ -100,8 +122,25 @@ const setCalcHistory = (state : CalcState, action : SetHistoryAction) : CalcStat
         ...state,
         calcHistory : state.calcHistory.concat({
             id : action.payload.id,
-            expression : `${ state.lastExpression } = ${ state.calculationResult }`
+            expression : `${ state.lastExpression } = ${ state.calculationResult }`,
+            isChecked : false
         })
+    };
+};
+
+const setIsChecked = (state : CalcState, action : ChangeCheckValue) : CalcState => {
+    return {
+        ...state,
+        calcHistory : state.calcHistory.map(history => 
+            history.id === action.payload.id ? { ...history, isChecked : !history.isChecked } : history
+        )
+    };
+};
+
+const removeChooseHistory = (state : CalcState) : CalcState => {
+    return {
+        ...state,
+        calcHistory : state.calcHistory.filter(history => history.isChecked !== true)
     };
 };
 

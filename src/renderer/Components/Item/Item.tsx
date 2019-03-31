@@ -5,12 +5,12 @@ import CheckBox from '../CheckBox';
 
 interface IProps {
     history : CalcHistoryType;
-    clickCheckBox : (id : string) => void;
+    isChecked : boolean;
 };
 
-const Item : SFC<IProps> = ({ history, clickCheckBox }) => (
+const Item : SFC<IProps> = ({ history, isChecked }) => (
     <div className={ styles.item }>
-        <CheckBox id={ history.id } />
+        <CheckBox id={ history.id } isChecked={ isChecked } />
         <label className={ styles.expression } htmlFor={ history.id }>{ history.expression }</label>
     </div>
 );

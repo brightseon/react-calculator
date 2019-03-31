@@ -5,6 +5,7 @@ import { CalcHistoryType } from '../../redux/modules/calc/types';
 interface IProps {
     calcHistory : CalcHistoryType[];
     allRemoveHistory : () => void;
+    removeHistory : () => void;
 };
 
 class HistoryContainer extends Component<IProps> {
@@ -17,9 +18,9 @@ class HistoryContainer extends Component<IProps> {
     };
 
     render() {
-        const { calcHistory, allRemoveHistory } = this.props;
+        const { calcHistory, removeHistory, allRemoveHistory } = this.props;
 
-        return <HistoryPresenter calcHistory={ calcHistory } allRemoveHistory={ allRemoveHistory } />;
+        return <HistoryPresenter calcHistory={ calcHistory } removeHistory={ removeHistory } allRemoveHistory={ allRemoveHistory } />;
     };
 };
 
