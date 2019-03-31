@@ -73,10 +73,16 @@ const makeUniqueId = () : string => {
     return Math.random().toString(36).substr(2, 16);
 };
 
+// 뒤에서 두번째 문자를 가져온다.
+const getLastSecondChar = (str : string) : string => {
+    return str.substr(str.length - 2, 1);
+};
+
 export {
     isDotWriting,
     getLastChar,
     isWritingLeftParenthesis,
     isWritingRightParenthesis,
-    makeUniqueId
+    makeUniqueId,
+    getLastSecondChar
 };

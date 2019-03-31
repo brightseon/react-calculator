@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CalcButtonPresenter from './CalcButtonPresenter';
 import { LabelInfo, CLEAR_BTN, EQUAL_BTN } from '../../utils/buttonLabels';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { operatorRegExpAddDot, numRegExpAddDot } from '../../utils/regExps';
-import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis, getLastChar, makeUniqueId } from '../../utils/commons';
+import { operatorRegExpAddDot, numRegExpAddDot, operatorRegExp, numRegExp } from '../../utils/regExps';
+import { isDotWriting, isWritingLeftParenthesis, isWritingRightParenthesis, getLastChar, makeUniqueId, getLastSecondChar } from '../../utils/commons';
 
 interface IProps {
     makeExpression : (button : string) => void;
@@ -22,30 +22,46 @@ class CalcButtonContainer extends Component<IProps> {
         return false;
     };
 
-    // 누른 버튼에 따라 onClick 이벤트를 결정
-    makeClickFunc = (buttonLabel : LabelInfo) : Function => {
+    clickButton = (buttonLabel : LabelInfo) => {
         const { resetExpression } = this.props;
 
         switch(buttonLabel.labelType) {
-            case CLEAR_BTN :
-                return resetExpression;
-            
+            case CLEAR_BTN : 
+                resetExpression();
+                break;
+
             case EQUAL_BTN :
-                return this.newCalculate;
+                this.newCalculate();
+                break;
 
             default :
-                return this.newMakeExpression;
+                this.newMakeExpression(buttonLabel);
+                break;
         }
     };
 
-    newMakeExpression = (buttonLabel : LabelInfo) : Function => {
+    newMakeExpression = (buttonLabel : LabelInfo) => {
         const { makeExpression } = this.props;
 
-        if(this.makeCondition(buttonLabel.text)) {
-            return () => {};
+        if(!this.makeCondition(buttonLabel.text)) {
+            const text = this.makeButtonText(buttonLabel.text);
+            makeExpression(text);
+        }
+    };
+
+    makeButtonText = (text : string) : string => {
+        const { currentExpression } = this.props;
+        let expression = currentExpression;
+
+        if(expression === '' && text === '.') {
+            return '0.';
         }
 
-        return makeExpression;
+        if(operatorRegExp.test(getLastSecondChar(expression)) && getLastChar(expression) === '0' && numRegExp.test(text)) {
+            return expression.substring(0, expression.length - 1) + text;
+        }
+
+        return expression + text;
     };
 
     // 방금 입력한 문자를 계산식에 넣을 수 있는지에 대한 조건을 만든다.
@@ -87,9 +103,7 @@ class CalcButtonContainer extends Component<IProps> {
     };
 
     render() {
-        const { currentExpression } = this.props;
-
-        return <CalcButtonPresenter makeClickFunc={ this.makeClickFunc } isEmptyExpression={ currentExpression === '' } />;
+        return <CalcButtonPresenter clickButton={ this.clickButton } />;
     };
 };
 

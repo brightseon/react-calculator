@@ -16,7 +16,7 @@ interface IMapStateToProps {
 };
 
 interface IMapDispatchToProps {
-    makeExpression : (button? : number | string, typeExpression? : number | string) => void;
+    makeExpression : (expression : string) => void;
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
     openSidebar : (isSetting : boolean) => void;
@@ -30,7 +30,7 @@ const mapStateToProps = (state : IState) : IMapStateToProps => ({
 });
 
 const mapDispatchToProps  = (dispatch : Dispatch) : IMapDispatchToProps => ({
-    makeExpression : (button? : string, typeExpression? : string) => dispatch(makeExpression(button, typeExpression)),
+    makeExpression : (expression : string) => dispatch(makeExpression(expression)),
     resetExpression : () => dispatch(resetExpression()),
     calculate : (calcResult) => dispatch(calculate(calcResult)),
     openSidebar : (isSetting : boolean) => dispatch(openSidebar(isSetting)),

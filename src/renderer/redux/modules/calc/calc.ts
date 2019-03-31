@@ -1,21 +1,12 @@
 import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction } from './types';
 
-export const makeExpression = (button? : string, typingExpression? : string) : MakeExpressionAction => {
-    if(button) {
-        return {
-            type : MAKE_EXPRESSION,
-            payload : {
-                button : button
-            }
-        };
-    } else {
-        return {
-            type : MAKE_EXPRESSION,
-            payload : {
-                expression : typingExpression
-            }
+export const makeExpression = (expression : string) : MakeExpressionAction => {
+    return {
+        type : MAKE_EXPRESSION,
+        payload : {
+            expression
         }
-    }
+    };
 };
 
 export const resetExpression = () : ResetExpressionAction => {
@@ -71,7 +62,7 @@ const reducer = (state : CalcState = initialState, action : MakeExpressionAction
 const setCurrentExpression = (state : CalcState, action : MakeExpressionAction) : CalcState => {
     return {
         ...state,
-        currentExpression : action.payload.expression ? action.payload.expression : state.currentExpression + action.payload.button
+        currentExpression : action.payload.expression
     };
 };
 

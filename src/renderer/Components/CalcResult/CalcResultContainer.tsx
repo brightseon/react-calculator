@@ -1,14 +1,14 @@
-import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, Ref, MouseEventHandler, MouseEvent } from 'react';
+import React, { Component, ChangeEventHandler, ChangeEvent, KeyboardEventHandler, KeyboardEvent, createRef, MouseEventHandler, MouseEvent } from 'react';
 import ResultPresenter from './CalcResultPresenter';
 import { isFirstOperator, isLastCharOperator, calculate as calculateUtil } from '../../utils/calculate';
-import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, operatorRegExp, numRegExpAddDot } from '../../utils/regExps';
-import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis, makeUniqueId } from '../../utils/commons';
+import { notCalcButtonRegExp, operatorRegExpAddDot, expressionRegExp, operatorRegExp, numRegExpAddDot, numRegExp } from '../../utils/regExps';
+import { isDotWriting, getLastChar, isWritingLeftParenthesis, isWritingRightParenthesis, makeUniqueId, getLastSecondChar } from '../../utils/commons';
 
 interface IProps {
     currentExpression : string;
     calculationResult : number;
     lastExpression : string;
-    makeExpression : (button? : number | string, typingExpression? : number | string) => void;
+    makeExpression : (expression : string) => void;
     resetExpression : () => void;
     calculate : (calcResult : number) => void;
     openSidebar : (isSetting : boolean) => void;
@@ -27,16 +27,20 @@ class CalcResultContainer extends Component<IProps> {
         return false;
     };
 
+    componentDidMount = () => {
+        this.makeCursorPosition();
+    };
+
     componentDidUpdate = () => {
-        this.calcResultRef.current.focus();
+        this.makeCursorPosition();
     };
 
     typingExpression : ChangeEventHandler = (e : ChangeEvent<HTMLInputElement>) : void => {
         const { resetExpression, makeExpression } = this.props;
 
         const { target : { value : expression } } = e;
-        const newExpression : string = expression.indexOf('0') === 0 && !operatorRegExpAddDot.test(expression) ? expression.substring(1) : expression;             // 0이 첫번째로 오면, 첫 번째 0을 자른다
-        
+        const newExpression = this.makeNewExpression(expression);
+
         if(newExpression === '') return resetExpression();
 
         if(this.makeCondition(newExpression)) {
@@ -45,7 +49,23 @@ class CalcResultContainer extends Component<IProps> {
 
         const sendExpression = this.makeOperatorFormat(newExpression);
 
-        makeExpression(null, sendExpression);
+        makeExpression(sendExpression);
+    };
+
+    makeNewExpression = (expression : string) : string => {
+        const { currentExpression } = this.props;
+        const lastChar = getLastChar(expression);
+        
+        // 0이 첫번째로 오면, 첫 번째 0을 자른다.
+        if(expression.indexOf('0') === 0 && !operatorRegExpAddDot.test(expression)) {
+            return expression.substring(1);
+        }
+
+        if(operatorRegExp.test(getLastSecondChar(currentExpression)) && getLastChar(currentExpression) === '0' && numRegExp.test(lastChar)) {
+            return currentExpression.substring(0, currentExpression.length - 1) + lastChar;
+        }
+
+        return expression;
     };
     
     // 방금 입력한 문자를 계산식에 넣을 수 있는지에 대한 조건을 만든다.
@@ -116,13 +136,18 @@ class CalcResultContainer extends Component<IProps> {
     };
 
     clickCalcResult : MouseEventHandler = (e : MouseEvent<HTMLInputElement>) => {
-        const { currentExpression } = this.props;
-        const len = currentExpression.length;
-        
         e.preventDefault();
         
+        this.makeCursorPosition();
+    };
+
+    makeCursorPosition = () => {
+        const { currentExpression } = this.props;
+        let len : number = currentExpression.length;
+        len = len * 2 + 1;
+
         this.calcResultRef.current.focus();
-        this.calcResultRef.current.setSelectionRange(len + 1, len + 1);
+        this.calcResultRef.current.setSelectionRange(len, len);
     };
 
     render() {

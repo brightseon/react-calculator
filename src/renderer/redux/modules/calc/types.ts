@@ -30,8 +30,7 @@ export interface SetHistoryAction {
 };
 
 interface ExpressionType {
-    button? : string;
-    expression? : string;
+    expression : string;
 };
 
 interface CalcResultType {
