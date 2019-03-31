@@ -1,4 +1,6 @@
-import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction } from './types';
+import { MAKE_EXPRESSION, CalcState, MakeExpressionAction, RESET_EXPRESSION, ResetExpressionAction, 
+    CALCULATE, CalculateAction, SET_HISTORY, SetHistoryAction, ALL_REMOVE_HISTORY, AllRemoveHisotryAction
+} from './types';
 
 export const makeExpression = (expression : string) : MakeExpressionAction => {
     return {
@@ -33,6 +35,12 @@ export const setHistory = (id : string) : SetHistoryAction => {
     };
 };
 
+export const resetHistory = () : AllRemoveHisotryAction => {
+    return {
+        type : ALL_REMOVE_HISTORY
+    };
+};
+
 const initialState : CalcState = {
     currentExpression : '',
     calcHistory : JSON.parse(localStorage.getItem('history')) || [],
@@ -40,7 +48,7 @@ const initialState : CalcState = {
     lastExpression : ''
 };
 
-const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction) : CalcState => {
+const reducer = (state : CalcState = initialState, action : MakeExpressionAction | ResetExpressionAction | CalculateAction | SetHistoryAction | AllRemoveHisotryAction) : CalcState => {
     switch (action.type) {
         case MAKE_EXPRESSION :
             return setCurrentExpression(state, action);
@@ -53,6 +61,9 @@ const reducer = (state : CalcState = initialState, action : MakeExpressionAction
 
         case SET_HISTORY :
             return setCalcHistory(state, action);
+
+        case ALL_REMOVE_HISTORY :
+            return resetCalcHistory(state);
         
         default :
             return state;
@@ -91,6 +102,13 @@ const setCalcHistory = (state : CalcState, action : SetHistoryAction) : CalcStat
             id : action.payload.id,
             expression : `${ state.lastExpression } = ${ state.calculationResult }`
         })
+    };
+};
+
+const resetCalcHistory = (state : CalcState) : CalcState => {
+    return {
+        ...state,
+        calcHistory : []
     };
 };
 

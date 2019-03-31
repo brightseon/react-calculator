@@ -10,7 +10,6 @@ interface IProps {
 
 const Item : SFC<IProps> = ({ history, clickCheckBox }) => (
     <div className={ styles.item }>
-        {/* <input className={ styles.checkBox } id={ history.id } type="checkbox" onChange={ () => clickCheckBox(history.id) } /> */}
         <CheckBox id={ history.id } />
         <label className={ styles.expression } htmlFor={ history.id }>{ history.expression }</label>
     </div>

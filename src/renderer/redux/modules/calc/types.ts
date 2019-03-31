@@ -2,6 +2,7 @@ export const MAKE_EXPRESSION = 'MAKE_EXPRESSION';
 export const RESET_EXPRESSION = 'RESET_EXPRESSION';
 export const CALCULATE = 'CALCULATE';
 export const SET_HISTORY = 'SET_HISTORY';
+export const ALL_REMOVE_HISTORY = 'ALL_REMOVE_HISTORY';
 
 export interface CalcState {
     currentExpression : string;
@@ -28,6 +29,10 @@ export interface SetHistoryAction {
     type : typeof SET_HISTORY;
     payload : HistoryType;
 };
+
+export interface AllRemoveHisotryAction {
+    type : typeof ALL_REMOVE_HISTORY;
+}
 
 interface ExpressionType {
     expression : string;

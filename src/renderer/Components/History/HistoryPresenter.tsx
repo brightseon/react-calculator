@@ -6,9 +6,10 @@ import Button from '../Button';
 
 interface IProps {
     calcHistory : CalcHistoryType[];
+    allRemoveHistory : () => void;
 };
 
-const HistoryPresenter : SFC<IProps> = ({ calcHistory }) => (
+const HistoryPresenter : SFC<IProps> = ({ calcHistory, allRemoveHistory }) => (
     <div className={ styles.history }>
         <div className={ styles.items }>
             {
@@ -17,7 +18,7 @@ const HistoryPresenter : SFC<IProps> = ({ calcHistory }) => (
         </div>
         <div className={ styles.buttons }>
             <Button className={ styles.removeBtn } onClick={ null } text="삭제" />
-            <Button className={ styles.allRemoveBtn } onClick={ null } text="전체 삭제" />
+            <Button className={ styles.allRemoveBtn } onClick={ allRemoveHistory } text="전체 삭제" />
         </div>
     </div>
 );
